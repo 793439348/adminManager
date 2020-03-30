@@ -101,25 +101,29 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">状态</label>
                                     <div class="col-md-9">
-                                        <div class="radio-list">
-                                            <label class="radio-inline"><div class="radio"><span class="checked"><input type="radio" name="status" value="1" checked="checked"></span></div> 启用</label>
-                                            <label class="radio-inline"><div class="radio"><span><input type="radio" name="status" value="2"></span></div> 停用</label>
-                                            <label class="radio-inline"><div class="radio"><span><input type="radio" name="status" value="3"></span></div> 关闭</label>
-                                            <label class="radio-inline"><div class="radio"><span><input type="radio" name="status" value="4"></span></div> 维护</label>
-                                        </div>
+                                        <input type="radio" name="status" value="1" checked="">启用
+                                        <input type="radio" name="status" value="2">停用
+                                        <input type="radio" name="status" value="3">关闭
+                                        <input type="radio" name="status" value="4">维护
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group has-success">
                                     <label class="col-md-3 control-label">角色</label>
                                     <div class="col-md-9">
-                                        <button type="button" class="btn btn-primary dropdown-toggle" value="1" data-toggle="dropdown">
-                                            超级管理员
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="#" value="1">超级管理员</a>
-                                            <a class="dropdown-item" href="#" value="2">Link 2</a>
-                                            <a class="dropdown-item" href="#">Link 3</a>
-                                        </div>
+                                        <select name="role_id" class="form-control input-medium" aria-invalid="false">
+                                            <option value="1" selected="selected">超级管理员</option>
+                                            <option value="2">运营主管</option>
+                                            <option value="3">客服专员</option>
+                                            <option value="4">财务组长</option>
+                                            <option value="5">普通客服</option>
+                                            <option value="6">充值专员</option>
+                                            <option value="7">打款专员</option>
+                                            <option value="9">客服组长</option>
+                                            <option value="10">风控专员</option>
+                                            <option value="11">风控组长</option>
+                                            <option value="12">审计组长</option>
+                                            <option value="13">审计专员</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
