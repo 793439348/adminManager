@@ -19,5 +19,6 @@ public interface MerchantService {
 
     boolean updateMerchant(Merchant merchant);
 
+    Merchant getMerchant(Integer id);
 
 }

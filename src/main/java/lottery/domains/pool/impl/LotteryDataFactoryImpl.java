@@ -720,7 +720,7 @@ public class LotteryDataFactoryImpl implements LotteryDataFactory, InitializingB
                         this.cdnConfig.setCdnVersion(value);
                     }
                     if (this.servletContext != null) {
-                        this.servletContext.setAttribute("cdnDomain", (Object)this.cdnConfig.getCdnDomain());
+                        this.servletContext.setAttribute("cdnDomain", /*(Object)this.cdnConfig.getCdnDomain()*/"http://127.0.0.1:8080/");
                         this.servletContext.setAttribute("cdnVersion", (Object)this.cdnConfig.getCdnVersion());
                     }
                 }

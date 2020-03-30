@@ -36,6 +36,13 @@ public class MerchantDaoImpl implements MerchantDao {
         return superDao.update(merchant);
     }
 
+    @Override
+    public Merchant getMerchant(Integer id) {
+        final String hql = "from " + "Merchant" + " where id = ?0";
+        final Object[] values = { id };
+        return (Merchant) superDao.unique(hql,values);
+    }
+
     public PageList find(List<Criterion> condition, List<Order> sort, int page, int pageSize) {
         final String propertyName = "id";
         return superDao.findPageList(Merchant.class,propertyName,condition,sort,page,pageSize);

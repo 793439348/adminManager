@@ -6,6 +6,7 @@ import admin.domains.content.entity.Merchant;
 import admin.domains.jobs.AdminUserActionLogJob;
 import admin.web.WebJSONObject;
 import admin.web.helper.AbstractActionController;
+import com.alibaba.fastjson.JSON;
 import javautils.http.HttpUtil;
 import javautils.jdbc.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,6 +135,24 @@ public class MerchantController extends AbstractActionController {
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
+        String nickname = request.getParameter("nickname");
+        Integer status = HttpUtil.getIntParameter(request, "status");
+        Integer role_id = HttpUtil.getIntParameter(request, "role_id");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String qq = request.getParameter("qq");
+        String wechat = request.getParameter("wechat");
+
+        Merchant merchant = new Merchant();
+        merchant.setNickname(nickname);
+        merchant.setStatus(status);
+        merchant.setRoleId(role_id);
+        merchant.setPhone(phone);
+        merchant.setEmail(email);
+        merchant.setQq(qq);
+        merchant.setWechat(wechat);
+        System.out.println(merchant);
+
         if (uEntity != null) {
             if (super.hasAccess(uEntity, actionKey)) {
 
@@ -144,4 +163,12 @@ public class MerchantController extends AbstractActionController {
         HttpUtil.write(response, json.toString(), "text/json");
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/merchant/get", method = RequestMethod.POST)
+    public void getMerchant(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        Integer id = HttpUtil.getIntParameter(request, "id");
+        System.out.println(id+"============");
+        Merchant merchant = merchantService.getMerchant(id);
+        HttpUtil.write(response, JSON.toJSONString(merchant),"text/json");
+    }
 }

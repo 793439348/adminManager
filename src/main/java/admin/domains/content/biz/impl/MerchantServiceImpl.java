@@ -64,4 +64,9 @@ public class MerchantServiceImpl implements MerchantService {
     public boolean updateMerchant(Merchant merchant) {
         return merchantDao.update(merchant);
     }
+
+    @Override
+    public Merchant getMerchant(Integer id) {
+        return merchantDao.getMerchant(id);
+    }
 }
