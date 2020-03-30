@@ -9,6 +9,7 @@ import admin.web.helper.AbstractActionController;
 import com.alibaba.fastjson.JSON;
 import javautils.http.HttpUtil;
 import javautils.jdbc.PageList;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpSession;
  * @author: zeng
  * @since: 2020-03-27
  */
+@Slf4j
 @Controller
 public class MerchantController extends AbstractActionController {
 
@@ -79,18 +82,9 @@ public class MerchantController extends AbstractActionController {
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
-        if (uEntity != null) {
-            if (super.hasAccess(uEntity, actionKey)) {
-
-            } else
-                json.set(2, "2-4");
-        } else
-            json.set(2, "2-6");
-
         String code = request.getParameter("code");
         String account = request.getParameter("account");
         String pwd1 = request.getParameter("pwd1");
-        String pwd2 = request.getParameter("pwd2");
         String nickname = request.getParameter("nickname");
         Integer status = HttpUtil.getIntParameter(request,"status");
         Integer role_id = HttpUtil.getIntParameter(request,"role_id");
@@ -104,10 +98,21 @@ public class MerchantController extends AbstractActionController {
         merchant.setNickname(nickname);
         merchant.setStatus(status);
         merchant.setEmail(email);
+        merchant.setBalance(BigDecimal.ZERO);
         merchant.setRoleId(role_id);
         merchant.setPhone(phone);
         merchant.setQq(qq);
-        System.out.println(merchant);
+        log.info("Merchant Add Info :{}",merchant);
+
+        if (uEntity != null) {
+            if (super.hasAccess(uEntity, actionKey)) {
+                boolean b = merchantService.add(merchant);
+                HttpUtil.write(response,String.valueOf(b),"text");
+                return;
+            } else
+                json.set(2, "2-4");
+        } else
+            json.set(2, "2-6");
         HttpUtil.write(response, json.toString(), "text/json");
     }
 
@@ -122,9 +127,9 @@ public class MerchantController extends AbstractActionController {
             if (super.hasAccess(uEntity, actionKey)) {
 
             } else
-                json.set(2, "");
+                json.set(2, "2-4");
         } else
-            json.set(2, "");
+            json.set(2, "2-6");
         HttpUtil.write(response, json.toString(), "text/json");
     }
 
@@ -136,14 +141,21 @@ public class MerchantController extends AbstractActionController {
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
         String nickname = request.getParameter("nickname");
+        String account = request.getParameter("account");
+        String code = request.getParameter("code");
         Integer status = HttpUtil.getIntParameter(request, "status");
         Integer role_id = HttpUtil.getIntParameter(request, "role_id");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
         String qq = request.getParameter("qq");
         String wechat = request.getParameter("wechat");
+        Integer id = HttpUtil.getIntParameter(request, "id");
 
         Merchant merchant = new Merchant();
+        merchant.setAccount(account);
+        merchant.setCode(code);
+        merchant.setBalance(BigDecimal.ZERO);
+        merchant.setId(id);
         merchant.setNickname(nickname);
         merchant.setStatus(status);
         merchant.setRoleId(role_id);
@@ -151,15 +163,17 @@ public class MerchantController extends AbstractActionController {
         merchant.setEmail(email);
         merchant.setQq(qq);
         merchant.setWechat(wechat);
-        System.out.println(merchant);
+        log.info("Merchant Modify Info:{}",merchant);
 
         if (uEntity != null) {
             if (super.hasAccess(uEntity, actionKey)) {
-
+                boolean b = merchantService.updateMerchant(merchant);
+                HttpUtil.write(response,String.valueOf(b),"text");
+                return;
             } else
-                json.set(2, "");
+                json.set(2, "2-4");
         } else
-            json.set(2, "");
+            json.set(2, "2-6");
         HttpUtil.write(response, json.toString(), "text/json");
     }
 
@@ -167,8 +181,8 @@ public class MerchantController extends AbstractActionController {
     @RequestMapping(value = "/merchant/get", method = RequestMethod.POST)
     public void getMerchant(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         Integer id = HttpUtil.getIntParameter(request, "id");
-        System.out.println(id+"============");
         Merchant merchant = merchantService.getMerchant(id);
+        log.info("merchant INFO :{}",merchant);
         HttpUtil.write(response, JSON.toJSONString(merchant),"text/json");
     }
 }

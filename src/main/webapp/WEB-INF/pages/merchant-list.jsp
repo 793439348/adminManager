@@ -294,14 +294,14 @@
                                     <label class="col-md-3 control-label">商户Id</label>
                                     <div class="col-md-9">
                                         <input id="code" name="code" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text" disabled="disabled">
+                                               autocomplete="off" type="text" readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">商户账号</label>
                                     <div class="col-md-9">
                                         <input id="account" name="account" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text" disabled="disabled">
+                                               autocomplete="off" type="text" readonly="readonly">
                                     </div>
                                 </div>
 
@@ -581,10 +581,15 @@
             type: 'post',
             url: '/merchant/add',
             data: data,
-            dataType: 'json',
-            success: function (bean) {
+            dataType: 'text',
+            success: function (data) {
+                if (data == "true") {
                 alert("增加成功");
+                }else {
+                    alert("增加失败");
+                }
                 $('#modal-merchant-add').modal("hide");
+                window.location.reload();
             }
         });
     }
@@ -596,10 +601,15 @@
             type: 'post',
             url: '/merchant/update',
             data: data,
-            dataType: 'json',
-            success: function (bean) {
-                alert("修改成功")
+            dataType: 'text',
+            success: function (data) {
+                if (data == "true") {
+                    alert("修改成功");
+                }else{
+                    alert("修改失败")
+                }
                 $('#modal-merchant-modify').modal("hide");
+                window.location.reload();
             }
         });
     }
