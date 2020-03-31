@@ -25,6 +25,13 @@ public class MerchantBrandDaoImpl implements MerchantBrandDao {
     private HibernateSuperDao<MerchantBrand> superDao;
 
     @Override
+    public MerchantBrand getBean(Integer id) {
+        String hql = "from MerchantBrand where id = ?0";
+        Object[] objs = {id};
+        return (MerchantBrand)superDao.unique(hql,objs);
+    }
+
+    @Override
     public List<MerchantBrand> findAll() {
         String hql = "from MerchantBrand";
         return superDao.list(hql);
@@ -39,7 +46,10 @@ public class MerchantBrandDaoImpl implements MerchantBrandDao {
     }
 
     public boolean update(MerchantBrand merchantBrand) {
-        return superDao.update(merchantBrand);
+        String hql = "update MerchantBrand set merchantId = ?0,name=?1,templete=?2,mtemplete=?3,status=?4 where id=?5";
+        Object[] objs = {merchantBrand.getMerchantId(), merchantBrand.getName(), merchantBrand.getTemplete(), merchantBrand.getMtemplete()
+                , merchantBrand.getStatus(), merchantBrand.getId()};
+        return superDao.update(hql,objs);
     }
 
     public PageList find(List<Criterion> condition, List<Order> sort, int page, int pageSize) {

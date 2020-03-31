@@ -23,6 +23,17 @@ public class SiteTemplate {
     private String smallImage;
     private String bigImage;
 
+    public SiteTemplate() {
+    }
+
+    public SiteTemplate(String code, String name, int type, String smallImage, String bigImage) {
+        this.code = code;
+        this.name = name;
+        this.type = type;
+        this.smallImage = smallImage;
+        this.bigImage = bigImage;
+    }
+
     @Id
     @Column(name = "id")
     public int getId() {

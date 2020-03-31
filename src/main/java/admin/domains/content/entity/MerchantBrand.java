@@ -24,6 +24,18 @@ public class MerchantBrand {
     private String mtemplete;
     private int status;
 
+    public MerchantBrand() {
+    }
+
+    public MerchantBrand(int merchantId, String name, String code, String templete, String mtemplete, int status) {
+        this.merchantId = merchantId;
+        this.name = name;
+        this.code = code;
+        this.templete = templete;
+        this.mtemplete = mtemplete;
+        this.status = status;
+    }
+
     @Id
     @Column(name = "id")
     public int getId() {

@@ -25,6 +25,19 @@ public class SiteTemplateDaoImpl implements SiteTemplateDao {
     @Autowired
     private HibernateSuperDao<SiteTemplate> superDao;
 
+    @Override
+    public SiteTemplate getBean(Integer id) {
+        String hql = "from SiteTemplate where id = ?0";
+        Object[] objs = {id};
+        return (SiteTemplate) superDao.unique(hql,objs);
+    }
+
+    @Override
+    public List<SiteTemplate> findAll() {
+        String hql = "from SiteTemplate";
+        return superDao.list(hql);
+    }
+
     public boolean add(SiteTemplate siteTemplate) {
         return superDao.save(siteTemplate);
     }
@@ -34,7 +47,10 @@ public class SiteTemplateDaoImpl implements SiteTemplateDao {
     }
 
     public boolean update(SiteTemplate siteTemplate) {
-        return superDao.update(siteTemplate);
+        String hql = "update SiteTemplate set name = ?0,type = ?1,smallImage=?2,bigImage=?3 where id = ?4";
+        Object[] objs = {siteTemplate.getName(), siteTemplate.getType(), siteTemplate.getSmallImage(),
+                siteTemplate.getBigImage(),siteTemplate.getId()};
+        return superDao.update(hql, objs);
     }
 
     public PageList find(List<Criterion> condition, List<Order> sort, int page, int pageSize) {

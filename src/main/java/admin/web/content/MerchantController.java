@@ -47,23 +47,23 @@ public class MerchantController extends AbstractActionController {
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 //        if (uEntity != null) {
 //            if (super.hasAccess(uEntity, actionKey)) {
-                String name = request.getParameter("name");
-                String code = request.getParameter("code");
-                Integer status = HttpUtil.getIntParameter(request, "status");
-                Integer page = HttpUtil.getIntParameter(request, "start");
-                Integer pageSize = HttpUtil.getIntParameter(request, "limit");
+        String name = request.getParameter("name");
+        String code = request.getParameter("code");
+        Integer status = HttpUtil.getIntParameter(request, "status");
+        Integer page = HttpUtil.getIntParameter(request, "start");
+        Integer pageSize = HttpUtil.getIntParameter(request, "limit");
 
         System.out.println(name+"-"+code+"-"+status+"-"+page+"-"+pageSize);
 
-                PageList pList = merchantService.search(name, code, status, page, pageSize);
-                if (pList != null) {
-                    json.accumulate("totalCount", pList.getCount());
-                    json.accumulate("data", pList.getList());
-                } else {
-                    json.accumulate("totalCount", 0);
-                    json.accumulate("data", "[]");
-                }
-                json.set(0, "0-3");
+        PageList pList = merchantService.search(name, code, status, page, pageSize);
+        if (pList != null) {
+            json.accumulate("totalCount", pList.getCount());
+            json.accumulate("data", pList.getList());
+        } else {
+            json.accumulate("totalCount", 0);
+            json.accumulate("data", "[]");
+        }
+        json.set(0, "0-3");
 //            } else
 //                json.set(2, "2-4");
 //        } else
@@ -181,7 +181,7 @@ public class MerchantController extends AbstractActionController {
     @RequestMapping(value = "/merchant/get", method = RequestMethod.POST)
     public void getMerchant(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         Integer id = HttpUtil.getIntParameter(request, "id");
-        Merchant merchant = merchantService.getMerchant(id);
+        Merchant merchant = merchantService.getBean(id);
         log.info("merchant INFO :{}",merchant);
         HttpUtil.write(response, JSON.toJSONString(merchant),"text/json");
     }

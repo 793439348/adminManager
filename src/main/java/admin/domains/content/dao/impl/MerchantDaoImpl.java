@@ -33,11 +33,15 @@ public class MerchantDaoImpl implements MerchantDao {
     }
 
     public boolean update(Merchant merchant) {
-        return superDao.update(merchant);
+        String hql = "update Merchant set nickname = ?0, status = ?1,roleId = ?2," +
+                "phone = ?3,email=?4,qq=?5,wechat=?6 where id=?7";
+        Object[] os = {merchant.getNickname(), merchant.getStatus(), merchant.getRoleId()
+                , merchant.getPhone(), merchant.getEmail(), merchant.getQq(), merchant.getWechat(), merchant.getId()};
+        return superDao.update(hql, os);
     }
 
     @Override
-    public Merchant getMerchant(Integer id) {
+    public Merchant getBean(Integer id) {
         final String hql = "from " + "Merchant" + " where id = ?0";
         final Object[] values = { id };
         return (Merchant) superDao.unique(hql,values);

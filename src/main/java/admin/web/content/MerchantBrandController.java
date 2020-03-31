@@ -1,12 +1,15 @@
 package admin.web.content;
 
 import admin.domains.content.entity.AdminUser;
+import admin.domains.content.vo.MerchantBrandVO;
 import admin.web.WebJSONObject;
 import admin.web.helper.AbstractActionController;
+import com.alibaba.fastjson.JSON;
 import javautils.http.HttpUtil;
 import admin.domains.content.entity.MerchantBrand;
 import admin.domains.content.biz.MerchantBrandService;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,17 +40,18 @@ public class MerchantBrandController extends AbstractActionController {
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
-        if (uEntity != null) {
-            if (super.hasAccess(uEntity, actionKey)){
-                List<MerchantBrand> list = merchantBrandService.listAll();
+//        if (uEntity != null) {
+//            if (super.hasAccess(uEntity, actionKey)){
+                List<MerchantBrandVO> list = merchantBrandService.listAll();
+
                 final JSONArray data = JSONArray.fromObject((Object)list);
                 HttpUtil.write(response,data.toString(),"text/json");
                 return;
-            }else
-                json.set(2,"2-4");
-        }else
-            json.set(2,"2-6");
-        HttpUtil.write(response,json.toString(),"text/json");
+//            }else
+//                json.set(2,"2-4");
+//        }else
+//            json.set(2,"2-6");
+//        HttpUtil.write(response,json.toString(),"text/json");
     }
 
     @RequestMapping(value = "/merchant-brand/add",method = RequestMethod.POST)
@@ -56,14 +60,22 @@ public class MerchantBrandController extends AbstractActionController {
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
-        if (uEntity != null) {
+        Integer merchantId = HttpUtil.getIntParameter(request,"merchantId");
+        String name = request.getParameter("name");
+        String code = request.getParameter("code");
+        String templete = request.getParameter("templete");
+        String mtemplete = request.getParameter("mtemplete");
+        Integer status = HttpUtil.getIntParameter(request, "status");
+        MerchantBrand merchantBrand = new MerchantBrand(merchantId,name,code,templete,mtemplete,status);
+        System.out.println(merchantBrand);
+        /*if (uEntity != null) {
             if (super.hasAccess(uEntity, actionKey)){
 
             }else
                 json.set(2,"");
         }else
             json.set(2,"");
-        HttpUtil.write(response,json.toString(),"text/json");
+        HttpUtil.write(response,json.toString(),"text/json");*/
     }
 
     @RequestMapping(value = "/merchant-brand/delete",method = RequestMethod.POST)
@@ -83,11 +95,12 @@ public class MerchantBrandController extends AbstractActionController {
     }
 
     @RequestMapping(value = "/merchant-brand/update",method = RequestMethod.POST)
-    public void MERCHANT_BRAND_UPDATE(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public void MERCHANT_BRAND_UPDATE(MerchantBrand merchantBrand,HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/merchant-brand/update";
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
+        System.out.println(merchantBrand);
         if (uEntity != null) {
             if (super.hasAccess(uEntity, actionKey)){
 
@@ -98,6 +111,14 @@ public class MerchantBrandController extends AbstractActionController {
         HttpUtil.write(response,json.toString(),"text/json");
     }
 
+    @RequestMapping(value = "/merchant-brand/get",method = RequestMethod.POST)
+    public void MERCHANT_BRAND_GET(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
+        final AdminUser uEntity = super.getCurrUser(session, request, response);
+        Integer id = HttpUtil.getIntParameter(request, "id");
 
+        MerchantBrand bean = merchantBrandService.getBean(id);
+        HttpUtil.write(response, JSON.toJSONString(bean),"text/json");
+    }
 
 }

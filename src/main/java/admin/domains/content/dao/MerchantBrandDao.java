@@ -17,6 +17,8 @@ import java.util.List;
  */
 public interface MerchantBrandDao {
 
+    MerchantBrand getBean(Integer id);
+
     List<MerchantBrand> findAll();
 
     boolean add(MerchantBrand merchantBrand);

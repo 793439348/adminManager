@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>商户列表</title>
+    <title>域名管理</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -43,20 +43,20 @@
 <div class="page-content-wrapper">
     <div class="page-content">
         <!-- BEGIN PAGE HEADER-->
-        <h3 class="page-title">商户列表</h3>
+        <h3 class="page-title">域名管理</h3>
         <div class="page-bar">
             <ul class="page-breadcrumb">
-                <li>当前位置：商户管理<i class="fa fa-angle-right"></i></li>
-                <li>商户列表</li>
+                <li>当前位置：域名管理<i class="fa fa-angle-right"></i></li>
+                <li>域名列表</li>
             </ul>
         </div>
         <%--START 新增商户--%>
-        <div id="modal-merchant-add" class="modal fade" data-backdrop="static" tabindex="-1">
+        <div id="modal-merchant-brand-add" class="modal fade" data-backdrop="static" tabindex="-1">
             <div class="modal-dialog" style="width: 680px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"></button>
-                        <h4 class="modal-title">新增商户</h4>
+                        <h4 class="modal-title">新增品牌</h4>
                         </button>
                     </div>
                     <div class="modal-body" style="padding: 30px 20px 15px 20px;">
@@ -64,94 +64,17 @@
                             <div class="form-body">
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">商户别名</label>
+                                    <label class="col-md-3 control-label">品牌名称</label>
                                     <div class="col-md-9">
                                         <input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请输入商户昵称。"></span>
+                                        <span class="help-inline" data-default="请选择品牌名称。"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">商户Id</label>
+                                    <label class="col-md-3 control-label">域名</label>
                                     <div class="col-md-9">
-                                        <input name="code" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请填写商户Id。"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">商户账号</label>
-                                    <div class="col-md-9">
-                                        <input name="account" class="form-control input-inline input-medium" autocomplete="off" type="password">
-                                        <span class="help-inline" data-default="请输入商户账号。"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">密码</label>
-                                    <div class="col-md-9">
-                                        <input name="pwd1" class="form-control input-inline input-medium" autocomplete="off" type="password">
-                                        <span class="help-inline" data-default="请输入密码。"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">确认密码</label>
-                                    <div class="col-md-9">
-                                        <input name="pwd2" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请确认密码。"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">状态</label>
-                                    <div class="col-md-9">
-                                        <input type="radio" name="status" value="1" checked="">启用
-                                        <input type="radio" name="status" value="2">停用
-                                        <input type="radio" name="status" value="3">关闭
-                                        <input type="radio" name="status" value="4">维护
-                                    </div>
-                                </div>
-                                <div class="form-group has-success">
-                                    <label class="col-md-3 control-label">角色</label>
-                                    <div class="col-md-9">
-                                        <select name="role_id" class="form-control input-medium" aria-invalid="false">
-                                            <option value="1" selected="selected">超级管理员</option>
-                                            <option value="2">运营主管</option>
-                                            <option value="3">客服专员</option>
-                                            <option value="4">财务组长</option>
-                                            <option value="5">普通客服</option>
-                                            <option value="6">充值专员</option>
-                                            <option value="7">打款专员</option>
-                                            <option value="9">客服组长</option>
-                                            <option value="10">风控专员</option>
-                                            <option value="11">风控组长</option>
-                                            <option value="12">审计组长</option>
-                                            <option value="13">审计专员</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">手机</label>
-                                    <div class="col-md-9">
-                                        <input name="phone" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请填写手机。"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label">邮箱</label>
-                                    <div class="col-md-9">
-                                        <input name="email" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                        <span class="help-inline" data-default="请填写邮箱。"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label">qq</label>
-                                    <div class="col-md-9">
-                                        <input name="qq" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                        <span class="help-inline" data-default="请填写qq。"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label">微信</label>
-                                    <div class="col-md-9">
-                                        <input name="wechat" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                        <span class="help-inline" data-default="请填写微信。"></span>
+                                        <input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
+                                        <span class="help-inline" data-default="请输入域名。"></span>
                                     </div>
                                 </div>
 
@@ -191,37 +114,26 @@
                             <div class="form-inline">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group">
+                                        <%--<div class="form-group">
                                             <div class="input-group input-medium">
-                                                <span class="input-group-addon no-bg fixed">商户名称</span>
+                                                <span class="input-group-addon no-bg fixed">商户</span>
                                                 <input name="merchant-name" class="form-control" type="text">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group input-medium">
-                                                <span class="input-group-addon no-bg fixed">商户ID</span>
-                                                <input name="merchant-id" class="form-control" type="text">
+                                                <span class="input-group-addon no-bg fixed">名称</span>
+                                                <input name="merchant-name" class="form-control" type="text">
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <span class="input-group-addon no-bg fixed">状态</span>
-                                                <select name="type" class="form-control">
-                                                    <option value="">全部</option>
-                                                    <option value="1">启用</option>
-                                                    <option value="2">停用</option>
-                                                    <option value="3">关闭</option>
-                                                    <option value="4">维护</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
                                         <div class="form-group">
                                             <a data-command="search" href="javascript:;" class="btn green-meadow"><i
                                                     class="fa fa-search"></i> 搜索</a>
-                                        </div>
+                                        </div>--%>
                                         <div class="btn-group pull-right">
-                                            <button class="btn green" data-toggle="modal" data-target="#modal-merchant-add">
-                                                <i class="fa fa-plus"></i> 新增商户
+                                            <button class="btn green" data-toggle="modal" data-target="#modal-merchant-brand-add">
+                                                <i class="fa fa-plus"></i> 新增域名
                                             </button>
                                         </div>
                                     </div>
@@ -232,37 +144,35 @@
                             <table class="table table-hover table-light">
                                 <thead>
                                 <tr class="align-center">
-                                    <th width="8%">ID</th>
-                                    <th width="10%">商户别名</th>
-                                    <th width="10%">商户ID</th>
-                                    <th>商户名称</th>
-                                    <th width="8%">线路费余额</th>
-                                    <th width="16%">状态</th>
-                                    <th width="8%">会员数</th>
-                                    <th width="12%">创建时间</th>
-                                    <th class="three">登入时间</th>
+                                    <th width="10%">商户</th>
+                                    <th width="10%">品牌</th>
+                                    <%--<th width="10%">名称</th>--%>
+                                    <%--<th width="8%">类型</th>--%>
+                                    <th width="16%">域名</th>
+                                    <%--<th width="16%">用该域名生产代理推广链接</th>--%>
+                                    <%--<th width="8%">状态</th>--%>
                                     <th class="three">操作</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tab-tbody">
                                 </tbody>
                             </table>
                         </div>
-                        <div class="page-list">
+                        <%--<div class="page-list">
                             <div class="easyweb-pagination">
                                 <div class="infos">记录总数：<span id="totalCount" class="t">0</span>，
                                     页数：<span id="page" class="p">0</span>/
                                     <span id="totalPage" class="p">0</span>
                                 </div>
                                 <div class="pages"><a class="top" id="top">首页</a><a class="prev" id="prev">上一页</a>
-                                    <%--<a class="page selected">1</a>--%>
+                                    &lt;%&ndash;<a class="page selected">1</a>&ndash;%&gt;
                                     <a class="next" id="next">下一页</a>
                                     <a class="end" id="end">尾页</a>
                                 </div>
                                 <div class="go"><input type="number" id="inputPage"><a id="btn-go" class="btn-go">搜索</a>
                                 </div>
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
                 </div>
                 <!-- END PORTLET-->
@@ -270,99 +180,43 @@
         </div>
         <!-- END PAGE CONTENT-->
 
-        <%--START 商户修改--%>
+        <%--START 域名修改--%>
         <div id="modal-merchant-modify" class="modal fade" data-backdrop="static" tabindex="-1">
             <div class="modal-dialog" style="width: 680px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"></button>
-                        <h4 class="modal-title">修改商户信息</h4>
+                        <h4 class="modal-title">域名修改</h4>
                         </button>
                     </div>
                     <div class="modal-body" style="padding: 30px 20px 15px 20px;">
                         <form method="post" action="/merchant/update" class="form-horizontal">
                             <div class="form-body">
 
+
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">商户别名</label>
+                                    <label class="col-md-3 control-label">商户名</label>
                                     <div class="col-md-9">
-                                        <input id="nickname" name="nickname" class="form-control input-inline input-medium"
+                                        <input id="merchantCode" name="merchantCode" class="form-control input-inline input-medium"
                                                autocomplete="off" type="text">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">商户Id</label>
+                                    <label class="col-md-3 control-label">品牌</label>
                                     <div class="col-md-9">
-                                        <input id="code" name="code" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text" readonly="readonly">
+                                        <input id="brand" name="brand" class="form-control input-inline input-medium"
+                                               autocomplete="off" type="text">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">商户账号</label>
+                                    <label class="col-md-3 control-label">域名</label>
                                     <div class="col-md-9">
-                                        <input id="account" name="account" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text" readonly="readonly">
+                                        <input id="domain" name="domain" class="form-control input-inline input-medium"
+                                               autocomplete="off" type="text">
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">状态</label>
-                                    <div id="status" class="col-md-9">
-                                        <input id="status1" type="radio" name="status" value="1">启用
-                                        <input id="status2" type="radio" name="status" value="2">停用
-                                        <input id="status3" type="radio" name="status" value="3">关闭
-                                        <input id="status4" type="radio" name="status" value="4">维护
-                                    </div>
-                                </div>
-                                <div class="form-group has-success">
-                                    <label class="col-md-3 control-label">角色</label>
-                                    <div class="col-md-9">
-                                        <select id="role_id" name="role_id" class="form-control input-medium" aria-invalid="false">
-                                            <option value="1" selected="selected">超级管理员</option>
-                                            <option value="2">运营主管</option>
-                                            <option value="3">客服专员</option>
-                                            <option value="4">财务组长</option>
-                                            <option value="5">普通客服</option>
-                                            <option value="6">充值专员</option>
-                                            <option value="7">打款专员</option>
-                                            <option value="9">客服组长</option>
-                                            <option value="10">风控专员</option>
-                                            <option value="11">风控组长</option>
-                                            <option value="12">审计组长</option>
-                                            <option value="13">审计专员</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">手机</label>
-                                    <div class="col-md-9">
-                                        <input id="phone" name="phone" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label">邮箱</label>
-                                    <div class="col-md-9">
-                                        <input id="email" name="email" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label">qq</label>
-                                    <div class="col-md-9">
-                                        <input id="qq" name="qq" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label">微信</label>
-                                    <div class="col-md-9">
-                                        <input id="wechat" name="wechat" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label"></label>
-                                    <div class="col-md-9">
-                                        <input id="id" name="id" class="form-control input-inline input-medium" autocomplete="off" type="hidden">
-                                    </div>
-                                </div>
+
                             </div>
                         </form>
                     </div>
@@ -420,33 +274,31 @@
     $(document).ready(function () {
         var tableList = $('#table-merchant-list');
         var tablePagelist = tableList.find('.page-list');
-        search("./merchant/list", 1);
+        search("/merchant-brand-domain/list");
         tableList.find('[data-command="search"]').unbind('click').click(function () {
-            var page = $('#page').text();
-            search("./merchant/list", parseInt(page));
+            // var page = $('#page').text();
+            search("/merchant-brand-domain/list");
         });
-        function search(url, page) {
-            var end = $('#end').val();
+        function search(url) {
+            /*var end = $('#end').val();
             if (end && page > end) {
                 page = end;
             }
             if (page <= 0) {
                 page = 1;
-            }
-            var merchantname = tableList.find('input[name=merchant-name]').val();
-            var id = tableList.find('input[name=merchant-id]').val();
-            var type = tableList.find('select[name="type"]').val();
-            var data = {name: merchantname, code: id, status: type, start: page - 1, limit: 10};
+            }*/
+            // var merchantname = tableList.find('input[name=merchant-name]').val();
+            var data = {};
             $.ajax({
                 type: 'post',
                 url: url,
-                data: data,
+                data: '',
                 dataType: 'json',
                 success: function (list) {
-                    var table = tableList.find('table > tbody').empty();
+                    var table = $('#tab-tbody');
                     var innerHtml = '';
-                    $.each(list.data, function (idx, val) {
-                        var merchantType = '';
+                    $.each(list, function (idx, val) {
+                        /*var merchantType = '';
                         if (val.status == 1) {
                             merchantType = '<form method="post" action="">' +
                                 '<input type="radio" name="type" value="1" checked>启用' +
@@ -475,18 +327,16 @@
                                 '<input type="radio" name="type" value="3">关闭' +
                                 '<input type="radio" name="type" value="4" checked>维护' +
                                 '</form>';
-                        }
+                        }*/
                         innerHtml +=
                             '<tr class="align-center" data-id="' + val.id + '">' +
-                            '<td>' + val.id + '</td>' +
-                            '<td>' + val.nickname + '</td>' +
-                            '<td>' + val.code + '</td>' +
-                            '<td>' + val.name + '</td>' +
-                            '<td>' + val.balance + '</td>' +
-                            '<td>' + merchantType + '</td>' +
-                            '<td>' + val.userNumber + '</td>' +
-                            '<td>' + val.createTime + '</td>' +
-                            '<td>' + val.loginTime + '</td>' +
+                            '<td>' + val.merchantCode + '</td>' +
+                            '<td>' + val.brandName + '</td>' +
+                            // '<td>' + val.name + '</td>' +
+                            // '<td>' + val.type + '</td>' +
+                            '<td>' + val.domain + '</td>' +
+                            // '<td>' + val.isfalse + '</td>' +
+                            // '<td>' + val.status + '</td>' +
                             '<td>' +
                             // '<a href="javascript:;" onclick="modify('+val.id+')" class="btn default btn-xs black"><i class="fa fa-modify"></i> 修改 </a>' +
                             '<button class="btn gray" data-toggle="modal" data-target="#modal-merchant-modify" ' +
@@ -497,15 +347,15 @@
                             '</tr>';
                     });
                     table.html(innerHtml);
-                    var totalCount = list.totalCount;
-                    var tatalPage = Math.ceil(totalCount / 10);
+                    /*var totalCount = list.totalCount;
+                    var tatalPage = Math.ceil(totalCount / 1);
                     $('#totalCount').text(totalCount);
                     $('#page').text(page);
                     $('#totalPage').text(tatalPage);
                     $('#end').val(tatalPage);
-                    $('#inputPage').val();
+                    $('#inputPage').val();*/
                     /*查询结果为空*/
-                    if (list.data.length == 0) {
+                    if (list.length == 0) {
                         var tds = tableList.find('thead tr th').size();
                         tableList.find('table > tbody').html('<tr><td colspan="' + tds + '">没有相关数据</td></tr>');
                         $('#page').text(0);
@@ -513,54 +363,42 @@
                 }
             });
         }
-        /*首页*/
+        /*/!*首页*!/
         $('#top').click(function () {
-            search("./merchant/list", 1);
+            search(".merchant-brand-domain/list", 1);
         })
-        /*尾页*/
+        /!*尾页*!/
         $('#end').click(function () {
             var page = $('#end').val();
-            search("./merchant/list", parseInt(page));
+            search(".merchant-brand-domain/list", parseInt(page));
         });
-        /*上页*/
+        /!*上页*!/
         $('#prev').click(function () {
             var page = $('#page').text();
-            search("./merchant/list", parseInt(page) - 1);
+            search(".merchant-brand-domain/list", parseInt(page) - 1);
         });
-        /*下页*/
+        /!*下页*!/
         $('#next').click(function () {
             var page = $('#page').text();
-            search("./merchant/list", parseInt(page) + 1);
+            search(".merchant-brand-domain/list", parseInt(page) + 1);
         });
         $('#btn-go').click(function () {
             var page = $('#inputPage').val();
-            search("./merchant/list", parseInt(page));
-        });
+            search(".merchant-brand-domain/list", parseInt(page));
+        });*/
     });
     /*商户信息修改*/
     function modify(id) {
         $.ajax({
             type: 'post',
-            url: '/merchant/get',
+            url: '/merchant-brand/get',
             data: "id="+id,
             dataType: 'json',
             success: function (bean) {
-                $('#nickname').val(bean.nickname);
-                $('#code').val(bean.code);
-                $('#account').val(bean.account);
-                $('#email').val(bean.email);
-                $('#qq').val(bean.qq);
-                $('#wechat').val(bean.wechat);
-                $('#phone').val(bean.phone);
-                $('#id').val(bean.id);
-                if(parseInt(bean.status)==1)
-                    $('#status1').attr("checked","checked");
-                if(parseInt(bean.status)==2)
-                    $('#status2').attr("checked","checked");
-                if(parseInt(bean.status)==3)
-                    $('#status3').attr("checked","checked");
-                if(parseInt(bean.status)==4)
-                    $('#status4').attr("checked","checked");
+                $('#merchantCode').val(bean.merchantCode);
+                $('#brand').val(bean.brand);
+                $('#domain').val(bean.domain);
+
                 $('#modal-merchant-modify').modal;
             }
         });
@@ -570,11 +408,11 @@
         var data = $("form:first").serialize()
         $.ajax({
             type: 'post',
-            url: '/merchant/add',
+            url: '/merchant-brand/add',
             data: data,
             dataType: 'text',
-            success: function (boo) {
-                if (boo == "true") {
+            success: function (data) {
+                if (data == "true") {
                     alert("增加成功");
                 }else {
                     alert("增加失败");

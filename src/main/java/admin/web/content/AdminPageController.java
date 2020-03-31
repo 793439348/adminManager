@@ -1017,4 +1017,36 @@ public class AdminPageController extends AbstractActionController
         return new ModelAndView("/merchant-list");
     }
 
+    @RequestMapping(value = { "/merchant-brand" }, method = { RequestMethod.GET })
+    @ResponseBody
+    public ModelAndView MERCHANT_BRAND(final HttpSession session, final HttpServletRequest request, final HttpServletResponse response) {
+        final AdminUser uEntity = super.getCurrUser(session, request, response);
+        if (uEntity == null) {
+            return new ModelAndView("redirect:/page-not-login");
+        }
+        return new ModelAndView("/merchant-brand");
+    }
+
+    @RequestMapping(value = { "/merchant-domain" }, method = { RequestMethod.GET })
+    @ResponseBody
+    public ModelAndView MERCHANT_DOMAIN(final HttpSession session, final HttpServletRequest request, final HttpServletResponse response) {
+        final AdminUser uEntity = super.getCurrUser(session, request, response);
+        if (uEntity == null) {
+            return new ModelAndView("redirect:/page-not-login");
+        }
+        return new ModelAndView("/merchant-domain");
+    }
+
+    @RequestMapping(value = { "/site-template" }, method = { RequestMethod.GET })
+    @ResponseBody
+    public ModelAndView SITE_TEMPLATE(final HttpSession session, final HttpServletRequest request, final HttpServletResponse response) {
+        final AdminUser uEntity = super.getCurrUser(session, request, response);
+        if (uEntity == null) {
+            return new ModelAndView("redirect:/page-not-login");
+        }
+        return new ModelAndView("/site-template");
+    }
+
+
+
 }

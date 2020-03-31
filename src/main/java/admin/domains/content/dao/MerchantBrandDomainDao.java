@@ -1,5 +1,6 @@
 package admin.domains.content.dao;
 
+import admin.domains.content.entity.MerchantBrand;
 import javautils.jdbc.PageList;
 import admin.domains.content.entity.MerchantBrandDomain;
 import org.hibernate.criterion.Criterion;
@@ -17,11 +18,15 @@ import java.util.List;
  */
 public interface MerchantBrandDomainDao {
 
+    MerchantBrandDomain getBean(Integer id);
+
     boolean add(MerchantBrandDomain merchantBrandDomain);
 
     boolean delete(MerchantBrandDomain merchantBrandDomain);
 
     boolean update(MerchantBrandDomain merchantBrandDomain);
+
+    List<MerchantBrandDomain> findAll();
 
     PageList find(final List<Criterion> condition, final List<Order> sort, final int page, final int pageSize);
 }

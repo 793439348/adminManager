@@ -17,6 +17,10 @@ import java.util.List;
  */
 public interface SiteTemplateDao {
 
+    SiteTemplate getBean(Integer id);
+
+    List<SiteTemplate> findAll();
+
     boolean add(SiteTemplate siteTemplate);
 
     boolean delete(SiteTemplate siteTemplate);

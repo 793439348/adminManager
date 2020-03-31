@@ -1,6 +1,7 @@
 package admin.domains.content.biz;
 
 import admin.domains.content.entity.MerchantBrand;
+import admin.domains.content.vo.MerchantBrandVO;
 
 import java.util.List;
 
@@ -13,8 +14,9 @@ import java.util.List;
  * @since: 2020-03-27
  */
 public interface MerchantBrandService {
+    MerchantBrand getBean(Integer id);
 
-    List<MerchantBrand> listAll();
+    List<MerchantBrandVO> listAll();
 
     boolean add(MerchantBrand merchantBrand);
 

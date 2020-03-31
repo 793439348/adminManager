@@ -3,6 +3,8 @@ package admin.domains.content.biz;
 import javautils.jdbc.PageList;
 import admin.domains.content.entity.SiteTemplate;
 
+import java.util.List;
+
 /**
  * <p>
  *
@@ -12,6 +14,10 @@ import admin.domains.content.entity.SiteTemplate;
  * @since: 2020-03-27
  */
 public interface SiteTemplateService {
+
+    SiteTemplate getBean(Integer id);
+
+    List<SiteTemplate> findAll();
 
     PageList search(Integer type,String name,Integer page,Integer pageSize);
 

@@ -66,7 +66,7 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     @Override
-    public Merchant getMerchant(Integer id) {
-        return merchantDao.getMerchant(id);
+    public Merchant getBean(Integer id) {
+        return merchantDao.getBean(id);
     }
 }

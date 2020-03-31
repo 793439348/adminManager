@@ -1,5 +1,10 @@
 package admin.domains.content.biz.impl;
 
+import admin.domains.content.dao.MerchantBrandDao;
+import admin.domains.content.dao.MerchantDao;
+import admin.domains.content.entity.Merchant;
+import admin.domains.content.entity.MerchantBrand;
+import admin.domains.content.vo.MerchantDomainVO;
 import admin.domains.pool.AdminDataFactory;
 import javautils.StringUtil;
 import javautils.jdbc.PageList;
@@ -32,6 +37,21 @@ public class MerchantBrandDomainServiceImpl implements MerchantBrandDomainServic
     @Autowired
     private MerchantBrandDomainDao domainDao;
 
+    @Autowired
+    private MerchantDao merchantDao;
+
+    @Autowired
+    private MerchantBrandDao merchantBrandDao;
+
+    @Override
+    public MerchantDomainVO getBean(Integer id) {
+        MerchantBrandDomain domain = domainDao.getBean(id);
+        MerchantBrand brand = merchantBrandDao.getBean(domain.getBrandId());
+        Merchant merchant = merchantDao.getBean(brand.getMerchantId());
+        MerchantDomainVO domainVO = new MerchantDomainVO(merchant,brand, domain);
+        return domainVO;
+    }
+
     @Override
     public PageList search(String name, Integer status, String domain, Integer page, Integer pageSize) {
         final List<Criterion> criterions = new ArrayList<Criterion>();
@@ -50,6 +70,20 @@ public class MerchantBrandDomainServiceImpl implements MerchantBrandDomainServic
 
         return domainDao.find(criterions,orders,page,pageSize);
     }
+
+    @Override
+    public List<MerchantDomainVO> findAll() {
+        List<MerchantBrandDomain> all = domainDao.findAll();
+        List<MerchantDomainVO> list = new ArrayList<>();
+        for (MerchantBrandDomain domain : all) {
+            MerchantBrand bean = merchantBrandDao.getBean(domain.getBrandId());
+            Merchant merchant = merchantDao.getBean(bean.getMerchantId());
+            MerchantDomainVO domainVO = new MerchantDomainVO(merchant,bean,domain);
+            list.add(domainVO);
+        }
+        return list;
+    }
+
 
     @Override
     public boolean add(MerchantBrandDomain domain) {

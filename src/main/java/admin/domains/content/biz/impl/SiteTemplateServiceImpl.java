@@ -33,6 +33,17 @@ public class SiteTemplateServiceImpl implements SiteTemplateService {
     private SiteTemplateDao siteTemplateDao;
 
     @Override
+    public SiteTemplate getBean(Integer id) {
+
+        return siteTemplateDao.getBean(id);
+    }
+
+    @Override
+    public List<SiteTemplate> findAll() {
+        return siteTemplateDao.findAll();
+    }
+
+    @Override
     public PageList search(Integer type,String name,Integer page,Integer pageSize) {
         List<Criterion> criteria = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
@@ -54,6 +65,6 @@ public class SiteTemplateServiceImpl implements SiteTemplateService {
 
     @Override
     public boolean update(SiteTemplate siteTemplate) {
-        return siteTemplate.equals(siteTemplate);
+        return siteTemplateDao.update(siteTemplate);
     }
 }
