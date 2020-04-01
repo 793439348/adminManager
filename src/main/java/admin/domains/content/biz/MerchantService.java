@@ -3,6 +3,8 @@ package admin.domains.content.biz;
 import javautils.jdbc.PageList;
 import admin.domains.content.entity.Merchant;
 
+import java.util.List;
+
 /**
  * <p>
  *
@@ -20,5 +22,7 @@ public interface MerchantService {
     boolean updateMerchant(Merchant merchant);
 
     Merchant getBean(Integer id);
+
+    List<Merchant> getListAll();
 
 }

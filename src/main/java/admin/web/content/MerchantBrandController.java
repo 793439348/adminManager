@@ -117,8 +117,15 @@ public class MerchantBrandController extends AbstractActionController {
         final AdminUser uEntity = super.getCurrUser(session, request, response);
         Integer id = HttpUtil.getIntParameter(request, "id");
 
-        MerchantBrand bean = merchantBrandService.getBean(id);
+        MerchantBrandVO bean = merchantBrandService.getBean(id);
         HttpUtil.write(response, JSON.toJSONString(bean),"text/json");
+    }
+
+    @RequestMapping(value = "/merchant-brand/getlist",method = RequestMethod.POST)
+    public void getList(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+        List<MerchantBrandVO> list = merchantBrandService.listAll();
+        HttpUtil.write(response,JSON.toJSONString(list),"text/json");
     }
 
 }

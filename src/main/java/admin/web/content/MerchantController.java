@@ -7,6 +7,7 @@ import admin.domains.jobs.AdminUserActionLogJob;
 import admin.web.WebJSONObject;
 import admin.web.helper.AbstractActionController;
 import com.alibaba.fastjson.JSON;
+import javautils.date.DateUtil;
 import javautils.http.HttpUtil;
 import javautils.jdbc.PageList;
 import lombok.extern.slf4j.Slf4j;
@@ -14,12 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * <p>
@@ -45,29 +48,29 @@ public class MerchantController extends AbstractActionController {
         final long t1 = System.currentTimeMillis();
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
-//        if (uEntity != null) {
-//            if (super.hasAccess(uEntity, actionKey)) {
-        String name = request.getParameter("name");
-        String code = request.getParameter("code");
-        Integer status = HttpUtil.getIntParameter(request, "status");
-        Integer page = HttpUtil.getIntParameter(request, "start");
-        Integer pageSize = HttpUtil.getIntParameter(request, "limit");
+        if (uEntity != null) {
+            if (super.hasAccess(uEntity, actionKey)) {
+                String name = request.getParameter("name");
+                String code = request.getParameter("code");
+                Integer status = HttpUtil.getIntParameter(request, "status");
+                Integer page = HttpUtil.getIntParameter(request, "start");
+                Integer pageSize = HttpUtil.getIntParameter(request, "limit");
 
-        System.out.println(name+"-"+code+"-"+status+"-"+page+"-"+pageSize);
+                log.info(name + "-" + code + "-" + status + "-" + page + "-" + pageSize);
 
-        PageList pList = merchantService.search(name, code, status, page, pageSize);
-        if (pList != null) {
-            json.accumulate("totalCount", pList.getCount());
-            json.accumulate("data", pList.getList());
-        } else {
-            json.accumulate("totalCount", 0);
-            json.accumulate("data", "[]");
-        }
-        json.set(0, "0-3");
-//            } else
-//                json.set(2, "2-4");
-//        } else
-//            json.set(2, "2-6");
+                PageList pList = merchantService.search(name, code, status, page, pageSize);
+                if (pList != null) {
+                    json.accumulate("totalCount", pList.getCount());
+                    json.accumulate("data", pList.getList());
+                } else {
+                    json.accumulate("totalCount", 0);
+                    json.accumulate("data", "[]");
+                }
+                json.set(0, "0-3");
+            } else
+                json.set(2, "2-4");
+        } else
+            json.set(2, "2-6");
         final long t2 = System.currentTimeMillis();
         if (uEntity != null) {
             this.adminUserActionLogJob.add(request, actionKey, uEntity, json, t2 - t1);
@@ -81,38 +84,37 @@ public class MerchantController extends AbstractActionController {
         final String actionKey = "/merchant/add";
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
-
-        String code = request.getParameter("code");
-        String account = request.getParameter("account");
-        String pwd1 = request.getParameter("pwd1");
-        String nickname = request.getParameter("nickname");
-        Integer status = HttpUtil.getIntParameter(request,"status");
-        Integer role_id = HttpUtil.getIntParameter(request,"role_id");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String qq = request.getParameter("qq");
-        Merchant merchant = new Merchant();
-        merchant.setAccount(account);
-        merchant.setCode(code);
-        merchant.setPassword(pwd1);
-        merchant.setNickname(nickname);
-        merchant.setStatus(status);
-        merchant.setEmail(email);
-        merchant.setBalance(BigDecimal.ZERO);
-        merchant.setRoleId(role_id);
-        merchant.setPhone(phone);
-        merchant.setQq(qq);
-        log.info("Merchant Add Info :{}",merchant);
-
+        final long t1 = System.currentTimeMillis();
         if (uEntity != null) {
             if (super.hasAccess(uEntity, actionKey)) {
-                boolean b = merchantService.add(merchant);
-                HttpUtil.write(response,String.valueOf(b),"text");
-                return;
+                String code = request.getParameter("code");
+                String account = request.getParameter("account");
+                String pwd1 = request.getParameter("pwd1");
+                String nickname = request.getParameter("nickname");
+                Integer status = HttpUtil.getIntParameter(request, "status");
+                Integer role_id = HttpUtil.getIntParameter(request, "role_id");
+                String phone = request.getParameter("phone");
+                String email = request.getParameter("email");
+                String qq = request.getParameter("qq");
+                String wechat = request.getParameter("wechat");
+                Merchant merchant = new Merchant(code,account,pwd1,nickname,BigDecimal.ZERO,status,
+                        role_id,phone,email,qq,wechat, DateUtil.getCurrentTime());
+
+                log.info("Merchant Add Info :{}", merchant);
+                try {
+                    boolean b = merchantService.add(merchant);
+                    json.set(0,"0-6");
+                } catch (Exception e) {
+                    json.set(1,"1-6");
+                }
             } else
                 json.set(2, "2-4");
         } else
             json.set(2, "2-6");
+        final long t2 = System.currentTimeMillis();
+        if (uEntity != null) {
+            this.adminUserActionLogJob.add(request, actionKey, uEntity, json, t2 - t1);
+        }
         HttpUtil.write(response, json.toString(), "text/json");
     }
 
@@ -163,12 +165,12 @@ public class MerchantController extends AbstractActionController {
         merchant.setEmail(email);
         merchant.setQq(qq);
         merchant.setWechat(wechat);
-        log.info("Merchant Modify Info:{}",merchant);
+        log.info("Merchant Modify Info:{}", merchant);
 
         if (uEntity != null) {
             if (super.hasAccess(uEntity, actionKey)) {
                 boolean b = merchantService.updateMerchant(merchant);
-                HttpUtil.write(response,String.valueOf(b),"text");
+                HttpUtil.write(response, String.valueOf(b), "text");
                 return;
             } else
                 json.set(2, "2-4");
@@ -182,7 +184,16 @@ public class MerchantController extends AbstractActionController {
     public void getMerchant(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         Integer id = HttpUtil.getIntParameter(request, "id");
         Merchant merchant = merchantService.getBean(id);
-        log.info("merchant INFO :{}",merchant);
-        HttpUtil.write(response, JSON.toJSONString(merchant),"text/json");
+        log.info("merchant INFO :{}", merchant);
+        HttpUtil.write(response, JSON.toJSONString(merchant), "text/json");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/merchant/getlist", method = RequestMethod.POST)
+    public void getMerchantList(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+        List<Merchant> listAll = merchantService.getListAll();
+
+        HttpUtil.write(response, JSON.toJSONString(listAll), "text/json");
     }
 }

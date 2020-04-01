@@ -8,6 +8,7 @@ import admin.domains.pool.AdminDataFactory;
 import javautils.StringUtil;
 import javautils.jdbc.PageList;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +45,10 @@ public class MerchantServiceImpl implements MerchantService {
         final List<Order> orders = new ArrayList<Order>();
 
         if (StringUtil.isNotNull(name))
-            criterions.add((Criterion) Restrictions.like("account", name));
+            criterions.add((Criterion) Restrictions.like("account", name, MatchMode.ANYWHERE));
         if (StringUtil.isNotNull(code))
-            criterions.add((Criterion) Restrictions.like("code", code));
-        if (status != null && status > -1 && status < 4)
+            criterions.add((Criterion) Restrictions.like("code", code,MatchMode.ANYWHERE));
+        if (status != null /*&& status > 0 && status <= 4*/)
             criterions.add((Criterion) Restrictions.eq("status", status));
 
         orders.add(Order.desc("id"));
@@ -68,5 +69,10 @@ public class MerchantServiceImpl implements MerchantService {
     @Override
     public Merchant getBean(Integer id) {
         return merchantDao.getBean(id);
+    }
+
+    @Override
+    public List<Merchant> getListAll() {
+        return merchantDao.findAll();
     }
 }

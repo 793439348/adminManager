@@ -1,5 +1,6 @@
 package admin.domains.content.dao.impl;
 
+import javautils.StringUtil;
 import javautils.jdbc.PageList;
 import javautils.jdbc.hibernate.HibernateSuperDao;
 import admin.domains.content.dao.MerchantDao;
@@ -51,4 +52,12 @@ public class MerchantDaoImpl implements MerchantDao {
         final String propertyName = "id";
         return superDao.findPageList(Merchant.class,propertyName,condition,sort,page,pageSize);
     }
+
+    @Override
+    public List<Merchant> findAll() {
+        String hql = "from Merchant";
+        return superDao.list(hql);
+    }
+
+
 }

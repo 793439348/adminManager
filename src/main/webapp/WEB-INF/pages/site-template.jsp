@@ -313,8 +313,8 @@
                             '<td>' + val.code + '</td>' +
                             '<td>' + val.name + '</td>' +
                             '<td>' + val.type + '</td>' +
-                            '<td>' + val.smallImage + '</td>' +
-                            '<td>' + val.bigImage + '</td>' +
+                            '<td>' + '<img src="'+val.smallImage+'" alt="缩略图" width="40" height="40">' + '</td>' +
+                            '<td>' + '<img src="'+ val.bigImage +'" alt="预览图" width="40" height="40">' + '</td>' +
                             '<td>' +
                             '<button class="btn gray" data-toggle="modal" data-target="#modal-merchant-modify" ' +
                             'onclick="modify('+val.id+')">' +

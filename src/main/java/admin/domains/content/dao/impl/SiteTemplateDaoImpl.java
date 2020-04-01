@@ -26,6 +26,13 @@ public class SiteTemplateDaoImpl implements SiteTemplateDao {
     private HibernateSuperDao<SiteTemplate> superDao;
 
     @Override
+    public SiteTemplate getBeanByCode(String code) {
+        String hql = "from SiteTemplate where code = ?0 ";
+        Object[] objs = {code};
+        return (SiteTemplate) superDao.unique(hql,objs);
+    }
+
+    @Override
     public SiteTemplate getBean(Integer id) {
         String hql = "from SiteTemplate where id = ?0";
         Object[] objs = {id};

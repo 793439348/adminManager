@@ -26,4 +26,6 @@ public interface MerchantDao {
     Merchant getBean(Integer id);
 
     PageList find(final List<Criterion> condition, final List<Order> sort, final int page, final int pageSize);
+
+    List<Merchant> findAll();
 }

@@ -36,6 +36,24 @@ public class Merchant {
     private String qq;
     private String wechat;
 
+    public Merchant() {
+    }
+
+    public Merchant(String code, String account, String password, String nickname, BigDecimal balance, int status, int roleId, String phone, String email, String qq, String wechat,String registTime) {
+        this.registTime = registTime;
+        this.code = code;
+        this.account = account;
+        this.password = password;
+        this.nickname = nickname;
+        this.balance = balance;
+        this.status = status;
+        this.roleId = roleId;
+        this.phone = phone;
+        this.email = email;
+        this.qq = qq;
+        this.wechat = wechat;
+    }
+
     @Id
     @Column(name = "id")
     public int getId() {

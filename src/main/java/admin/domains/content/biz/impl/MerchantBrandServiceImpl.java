@@ -1,7 +1,9 @@
 package admin.domains.content.biz.impl;
 
 import admin.domains.content.dao.MerchantDao;
+import admin.domains.content.dao.SiteTemplateDao;
 import admin.domains.content.entity.Merchant;
+import admin.domains.content.entity.SiteTemplate;
 import admin.domains.content.vo.MerchantBrandVO;
 import admin.domains.pool.AdminDataFactory;
 import admin.domains.content.dao.MerchantBrandDao;
@@ -33,9 +35,18 @@ public class MerchantBrandServiceImpl implements MerchantBrandService {
     @Autowired
     private MerchantDao merchantDao;
 
+    @Autowired
+    private SiteTemplateDao templateDao;
+
     @Override
-    public MerchantBrand getBean(Integer id) {
-        return brandDao.getBean(id);
+    public MerchantBrandVO getBean(Integer id) {
+        MerchantBrand bean = brandDao.getBean(id);
+        SiteTemplate template = templateDao.getBeanByCode(bean.getTemplete());
+        SiteTemplate mtemplate = templateDao.getBeanByCode(bean.getMtemplete());
+        MerchantBrandVO brandVO = new MerchantBrandVO(bean);
+        brandVO.setTemplete(template);
+        brandVO.setMtemplete(mtemplate);
+        return brandVO;
     }
 
     @Override
@@ -44,7 +55,12 @@ public class MerchantBrandServiceImpl implements MerchantBrandService {
         List<MerchantBrandVO> list = new ArrayList<>();
         for (MerchantBrand brand : brands) {
             Merchant merchant = merchantDao.getBean(brand.getMerchantId());
-            MerchantBrandVO merchantBrandVO = new MerchantBrandVO(merchant,brand);
+            SiteTemplate mtemplate = templateDao.getBeanByCode(brand.getMtemplete());
+            SiteTemplate template = templateDao.getBeanByCode(brand.getTemplete());
+            MerchantBrandVO merchantBrandVO = new MerchantBrandVO(brand);
+            merchantBrandVO.setMerchantName(merchant.getCode());
+            merchantBrandVO.setTemplete(template);
+            merchantBrandVO.setMtemplete(mtemplate);
             list.add(merchantBrandVO);
         }
         return list;

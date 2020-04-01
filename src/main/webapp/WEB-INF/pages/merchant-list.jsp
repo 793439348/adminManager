@@ -67,41 +67,41 @@
                                     <label class="col-md-3 control-label">商户别名</label>
                                     <div class="col-md-9">
                                         <input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请输入商户昵称。"></span>
+                                        <span>请填写商户别名</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">商户Id</label>
                                     <div class="col-md-9">
-                                        <input name="code" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请填写商户Id。"></span>
+                                        <input name="code" class="form-control input-inline input-medium" autocomplete="off" type="text" minlength="4" maxlength="4">
+                                        <span>请填写长度为4的商户Id</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">商户账号</label>
                                     <div class="col-md-9">
-                                        <input name="account" class="form-control input-inline input-medium" autocomplete="off" type="password">
-                                        <span class="help-inline" data-default="请输入商户账号。"></span>
+                                        <input name="account" class="form-control input-inline input-medium" autocomplete="off" type="text">
+                                        <span>请输入商户账号</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">密码</label>
                                     <div class="col-md-9">
                                         <input name="pwd1" class="form-control input-inline input-medium" autocomplete="off" type="password">
-                                        <span class="help-inline" data-default="请输入密码。"></span>
+                                        <span>请输入密码</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">确认密码</label>
                                     <div class="col-md-9">
-                                        <input name="pwd2" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请确认密码。"></span>
+                                        <input name="pwd2" class="form-control input-inline input-medium" autocomplete="off" type="password">
+                                        <span>请确认密码</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">状态</label>
                                     <div class="col-md-9">
-                                        <input type="radio" name="status" value="1" checked="">启用
+                                        <input type="radio" name="status" value="1" checked="checked">启用
                                         <input type="radio" name="status" value="2">停用
                                         <input type="radio" name="status" value="3">关闭
                                         <input type="radio" name="status" value="4">维护
@@ -130,28 +130,28 @@
                                     <label class="col-md-3 control-label">手机</label>
                                     <div class="col-md-9">
                                         <input name="phone" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请填写手机。"></span>
+                                        <span>请填写手机号</span>
                                     </div>
                                 </div>
                                 <div class="form-group" >
                                     <label class="col-md-3 control-label">邮箱</label>
                                     <div class="col-md-9">
                                         <input name="email" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                        <span class="help-inline" data-default="请填写邮箱。"></span>
+                                        <span>请填写邮箱</span>
                                     </div>
                                 </div>
                                 <div class="form-group" >
                                     <label class="col-md-3 control-label">qq</label>
                                     <div class="col-md-9">
                                         <input name="qq" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                        <span class="help-inline" data-default="请填写qq。"></span>
+                                        <span>请填写qq</span>
                                     </div>
                                 </div>
                                 <div class="form-group" >
                                     <label class="col-md-3 control-label">微信</label>
                                     <div class="col-md-9">
                                         <input name="wechat" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                        <span class="help-inline" data-default="请填写微信。"></span>
+                                        <span>请填写微信</span>
                                     </div>
                                 </div>
 
@@ -300,7 +300,7 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">商户账号</label>
                                     <div class="col-md-9">
-                                        <input id="account" name="account" class="form-control input-inline input-medium"
+                                        <input id="name" name="account" class="form-control input-inline input-medium"
                                                autocomplete="off" type="text" readonly="readonly">
                                     </div>
                                 </div>
@@ -436,7 +436,7 @@
             var merchantname = tableList.find('input[name=merchant-name]').val();
             var id = tableList.find('input[name=merchant-id]').val();
             var type = tableList.find('select[name="type"]').val();
-            var data = {name: merchantname, code: id, status: type, start: page - 1, limit: 10};
+            var data = {name: merchantname, code: id, status: type, start: (page - 1)*10, limit: 10};
             $.ajax({
                 type: 'post',
                 url: url,
@@ -449,31 +449,31 @@
                         var merchantType = '';
                         if (val.status == 1) {
                             merchantType = '<form method="post" action="">' +
-                                '<input type="radio" name="type" value="1" checked>启用' +
-                                '<input type="radio" name="type" value="2">停用' +
-                                '<input type="radio" name="type" value="3">关闭' +
-                                '<input type="radio" name="type" value="4">维护' +
+                                '<input type="radio" name="m-type" value="1" checked>启用' +
+                                '<input type="radio" name="m-type" value="2">停用' +
+                                '<input type="radio" name="m-type" value="3">关闭' +
+                                '<input type="radio" name="m-type" value="4">维护' +
                                 '</form>';
                         } else if (val.status == 2) {
                             merchantType = '<form method="post" action="">' +
-                                '<input type="radio" name="type" value="1" >启用' +
-                                '<input type="radio" name="type" value="2" checked>停用' +
-                                '<input type="radio" name="type" value="3">关闭' +
-                                '<input type="radio" name="type" value="4">维护' +
+                                '<input type="radio" name="m-type" value="1" >启用' +
+                                '<input type="radio" name="m-type" value="2" checked>停用' +
+                                '<input type="radio" name="m-type" value="3">关闭' +
+                                '<input type="radio" name="m-type" value="4">维护' +
                                 '</form>';
                         } else if (val.status == 3) {
                             merchantType = '<form method="post" action="">' +
-                                '<input type="radio" name="type" value="1" >启用' +
-                                '<input type="radio" name="type" value="2">停用' +
-                                '<input type="radio" name="type" value="3" checked>关闭' +
-                                '<input type="radio" name="type" value="4">维护' +
+                                '<input type="radio" name="m-type" value="1" >启用' +
+                                '<input type="radio" name="m-type" value="2">停用' +
+                                '<input type="radio" name="m-type" value="3" checked>关闭' +
+                                '<input type="radio" name="m-type" value="4">维护' +
                                 '</form>';
                         } else if (val.status == 4) {
                             merchantType = '<form method="post" action="">' +
-                                '<input type="radio" name="type" value="1" >启用' +
-                                '<input type="radio" name="type" value="2">停用' +
-                                '<input type="radio" name="type" value="3">关闭' +
-                                '<input type="radio" name="type" value="4" checked>维护' +
+                                '<input type="radio" name="m-type" value="1" >启用' +
+                                '<input type="radio" name="m-type" value="2">停用' +
+                                '<input type="radio" name="m-type" value="3">关闭' +
+                                '<input type="radio" name="m-type" value="4" checked>维护' +
                                 '</form>';
                         }
                         innerHtml +=
@@ -513,6 +513,8 @@
                 }
             });
         }
+
+
         /*首页*/
         $('#top').click(function () {
             search("./merchant/list", 1);
@@ -534,9 +536,21 @@
         });
         $('#btn-go').click(function () {
             var page = $('#inputPage').val();
+            if(!page || page == ''){
+                page = 1;
+            }
             search("./merchant/list", parseInt(page));
         });
+
+
+        /*修改状态*/
+        $('input:radio[name="m-type"]').change(function () {
+            alert("xxxx")
+        });
+
     });
+
+
     /*商户信息修改*/
     function modify(id) {
         $.ajax({
@@ -547,7 +561,7 @@
             success: function (bean) {
                 $('#nickname').val(bean.nickname);
                 $('#code').val(bean.code);
-                $('#account').val(bean.account);
+                $('#name').val(bean.account);
                 $('#email').val(bean.email);
                 $('#qq').val(bean.qq);
                 $('#wechat').val(bean.wechat);
@@ -567,17 +581,19 @@
     }
     /*新增商户提交*/
     function sub() {
-        var data = $("form:first").serialize()
+        var data = $("form:first").serialize();
+
         $.ajax({
             type: 'post',
             url: '/merchant/add',
             data: data,
-            dataType: 'text',
+            dataType: 'json',
             success: function (boo) {
-                if (boo == "true") {
-                    alert("增加成功");
-                }else {
-                    alert("增加失败");
+                if (boo.error == "0") {
+                    alert("保存成功");
+                }
+                else {
+                    alert("保存失败");
                 }
                 $('#modal-merchant-add').modal("hide");
                 window.location.reload();

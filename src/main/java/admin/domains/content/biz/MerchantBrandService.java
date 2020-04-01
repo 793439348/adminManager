@@ -14,7 +14,7 @@ import java.util.List;
  * @since: 2020-03-27
  */
 public interface MerchantBrandService {
-    MerchantBrand getBean(Integer id);
+    MerchantBrandVO getBean(Integer id);
 
     List<MerchantBrandVO> listAll();
 

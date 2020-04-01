@@ -66,15 +66,16 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">商户名</label>
                                     <div class="col-md-9">
-                                        <input name="merchantId" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请选择商户名。"></span>
+                                        <select id="merchantName" name="merchantId">
+
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">名称</label>
+                                    <label class="col-md-3 control-label">品牌名称</label>
                                     <div class="col-md-9">
                                         <input name="name" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请填写名称。"></span>
+                                        <span class="help-inline" data-default="请填写品牌名称。"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -87,8 +88,11 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">PC端模板</label>
                                     <div class="col-md-9">
-                                        <input name="templete" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请选择模板。"></span>
+                                        <select id="modify-temp" name="templete">
+
+                                        </select>
+
+                                        <img src="" alt="预览图">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -159,7 +163,7 @@
                                                     class="fa fa-search"></i> 搜索</a>
                                         </div>--%>
                                         <div class="btn-group pull-right">
-                                            <button class="btn green" data-toggle="modal" data-target="#modal-brand-add">
+                                            <button class="btn green" data-toggle="modal" data-target="#modal-brand-add" onclick="findMerchant()">
                                                 <i class="fa fa-plus"></i> 新增品牌
                                             </button>
                                         </div>
@@ -175,8 +179,8 @@
                                     <th width="10%">商户</th>
                                     <th width="10%">品牌名称</th>
                                     <th width="10%">品牌代号</th>
-                                    <th width="16%">PC模板</th>
-                                    <th>移动模板</th>
+                                    <th width="16%">手机端模板</th>
+                                    <th>PC端模板</th>
                                     <th width="8%">状态</th>
                                     <th class="three">操作</th>
                                 </tr>
@@ -207,7 +211,7 @@
         </div>
         <!-- END PAGE CONTENT-->
 
-        <%--START 商户修改--%>
+        <%--START 修改--%>
         <div id="modal-merchant-modify" class="modal fade" data-backdrop="static" tabindex="-1">
             <div class="modal-dialog" style="width: 680px;">
                 <div class="modal-content">
@@ -223,8 +227,9 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">商户名</label>
                                     <div class="col-md-9">
-                                        <input id="mName" name="merchantId" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text">
+                                        <select id="mName" name="merchantId">
+
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -244,22 +249,19 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">PC端模板</label>
                                     <div class="col-md-9">
-                                        <input id="b-templete" name="templete" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text">
+                                        <img id="b-templete" src="" alt="图片" width="40" height="40">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">移动端模板</label>
                                     <div class="col-md-9">
-                                        <input id="b-mtemplete" name="mtemplete" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text">
+                                        <img id="b-mtemplete" src="" alt="图片" width="40" height="40">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">状态</label>
-                                    <div class="col-md-9">
-                                        <input id="status" name="status" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text">
+                                    <div id="status" class="col-md-9">
+
                                     </div>
                                 </div>
 
@@ -364,8 +366,8 @@
                             '<td>' + val.merchantName + '</td>' +
                             '<td>' + val.name + '</td>' +
                             '<td>' + val.code + '</td>' +
-                            '<td>' + val.templete + '</td>' +
-                            '<td>' + val.mtemplete + '</td>' +
+                            '<td>' + '<img src="'+val.templete.smallImage+'" alt="图片" width="40" height="40">' + '</td>' +
+                            '<td>' + '<img src="'+val.mtemplete.smallImage+'" alt="图片" width="40" height="40">' + '</td>' +
                             '<td>' + type + '</td>' +
                             '<td>' +
                             // '<a href="javascript:;" onclick="modify('+val.id+')" class="btn default btn-xs black"><i class="fa fa-modify"></i> 修改 </a>' +
@@ -393,31 +395,9 @@
                 }
             });
         }
-        /*/!*首页*!/
-        $('#top').click(function () {
-            search("./merchant-brand/list", 1);
-        })
-        /!*尾页*!/
-        $('#end').click(function () {
-            var page = $('#end').val();
-            search("./merchant-brand/list", parseInt(page));
-        });
-        /!*上页*!/
-        $('#prev').click(function () {
-            var page = $('#page').text();
-            search("./merchant-brand/list", parseInt(page) - 1);
-        });
-        /!*下页*!/
-        $('#next').click(function () {
-            var page = $('#page').text();
-            search("./merchant-brand/list", parseInt(page) + 1);
-        });
-        $('#btn-go').click(function () {
-            var page = $('#inputPage').val();
-            search("./merchant-brand/list", parseInt(page));
-        });*/
+
     });
-    /*商户信息修改*/
+    /*修改*/
     function modify(id) {
         $.ajax({
             type: 'post',
@@ -425,19 +405,48 @@
             data: "id="+id,
             dataType: 'json',
             success: function (bean) {
-                $('#mName').val(bean.merchantId);
+                // $('#mName').val(bean.merchantId);
                 $('#bName').val(bean.name);
                 $('#brand-code').val(bean.code);
-                $('#b-templete').val(bean.templete);
-                $('#b-mtemplete').val(bean.mtemplete);
-                $('#status').val(bean.status);
-
-
+                $('#b-templete').attr("src",bean.templete.smallImage);
+                $('#b-mtemplete').attr("src",bean.mtemplete.smallImage);
+                var type = '';
+                if (bean.status == 0) {
+                    type = '<form method="post" action="">' +
+                        '<input type="radio" name="type" value="0" checked>启用' +
+                        '<input type="radio" name="type" value="1">停用' +
+                        '</form>';
+                } else if (val.status == 1) {
+                    type = '<form method="post" action="">' +
+                        '<input type="radio" name="type" value="0" >启用' +
+                        '<input type="radio" name="type" value="1" checked>停用' +
+                        '</form>';
+                }
+                $('#status').html(type);
                 $('#modal-merchant-modify').modal;
             }
         });
+
+        $.ajax({
+            type: 'post',
+            url: '/merchant/getlist',
+            data: '',
+            dataType: 'json',
+            success: function (list) {
+                var innerhtml = '';
+                if (list.length != 0) {
+                    $.each(list,function (idx, val) {
+                        innerhtml+='<option value='+val.id+' >'+val.code+'</option>';
+                    })
+                }else {
+                    innerhtml = '<option value="0" >无商户信息</option>';
+                }
+
+                $('#mName').html(innerhtml);
+            }
+        })
     }
-    /*新增品牌提交*/
+    /*提交*/
     function sub() {
         var data = $("form:first").serialize()
         $.ajax({
@@ -456,7 +465,7 @@
             }
         });
     }
-    /*修改品牌提交*/
+    /*修改提交*/
     function sub1() {
         var data = $("form:last").serialize()
         $.ajax({
@@ -474,6 +483,26 @@
                 window.location.reload();
             }
         });
+    }
+
+    function findMerchant() {
+        $.ajax({
+            type: 'post',
+            url: '/merchant/getlist',
+            data: '',
+            dataType: "json",
+            success: function (data) {
+                var innerhtml = '';
+                if (data.length != 0) {
+                    $.each(data,function (idx, val) {
+                        innerhtml+='<option value='+val.id+' >'+val.code+'</option>';
+                    })
+                }else {
+                 innerhtml = '<option value="0" >无商户信息</option>';
+                }
+                $('#merchantName').html(innerhtml);
+            }
+        })
     }
 </script>
 </body>
