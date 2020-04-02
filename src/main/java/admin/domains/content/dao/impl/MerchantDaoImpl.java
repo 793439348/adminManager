@@ -42,6 +42,13 @@ public class MerchantDaoImpl implements MerchantDao {
     }
 
     @Override
+    public boolean updateType(Integer id, Integer status) {
+        String hql = "update Merchant set status = ?0 where id = ?1";
+        Object[] obj = {status, id};
+        return superDao.update(hql,obj);
+    }
+
+    @Override
     public Merchant getBean(Integer id) {
         final String hql = "from " + "Merchant" + " where id = ?0";
         final Object[] values = { id };

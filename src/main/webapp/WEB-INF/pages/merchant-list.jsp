@@ -317,7 +317,7 @@
                                 <div class="form-group has-success">
                                     <label class="col-md-3 control-label">角色</label>
                                     <div class="col-md-9">
-                                        <select id="role_id" name="role_id" class="form-control input-medium" aria-invalid="false">
+                                        <select id="role_id" name="roleId" class="form-control input-medium" aria-invalid="false">
                                             <option value="1" selected="selected">超级管理员</option>
                                             <option value="2">运营主管</option>
                                             <option value="3">客服专员</option>
@@ -425,6 +425,8 @@
             var page = $('#page').text();
             search("./merchant/list", parseInt(page));
         });
+
+
         function search(url, page) {
             var end = $('#end').val();
             if (end && page > end) {
@@ -510,10 +512,15 @@
                         tableList.find('table > tbody').html('<tr><td colspan="' + tds + '">没有相关数据</td></tr>');
                         $('#page').text(0);
                     }
+
+                    $("input[name=m-type]").click(function(){
+                        var type = this.value;
+                        var id = $(this).parent().parent().siblings(":first").text();
+                        modifyType(id, type);
+                    });
                 }
             });
         }
-
 
         /*首页*/
         $('#top').click(function () {
@@ -543,14 +550,21 @@
         });
 
 
-        /*修改状态*/
-        $('input:radio[name="m-type"]').change(function () {
-            alert("xxxx")
-        });
-
     });
 
-
+    function modifyType(id,type) {
+        $.ajax({
+            type: 'post',
+            url: '/merchant/modify-type',
+            data: "id="+id+"&status="+type,
+            dataType: 'text',
+            success: function (dat){
+                if (dat != "true") {
+                    alert("修改状态失败");
+                }
+            }
+        });
+    }
     /*商户信息修改*/
     function modify(id) {
         $.ajax({
@@ -583,6 +597,18 @@
     function sub() {
         var data = $("form:first").serialize();
 
+        var boo = false;
+
+        var phoneReg = '/^0?1[3|4|5|8|7][0-9]\d{8}$/';
+
+        var pwdReg = '/^[a-zA-Z0-9_]+$/';
+
+        var emailReg = '/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/';
+
+        var reQQ = '/^[1-9]\d{4,9}$/';
+
+
+
         $.ajax({
             type: 'post',
             url: '/merchant/add',
@@ -591,12 +617,10 @@
             success: function (boo) {
                 if (boo.error == "0") {
                     alert("保存成功");
+                    $('#modal-merchant-add').modal("hide");
+                    window.location.reload();
                 }
-                else {
-                    alert("保存失败");
-                }
-                $('#modal-merchant-add').modal("hide");
-                window.location.reload();
+
             }
         });
     }

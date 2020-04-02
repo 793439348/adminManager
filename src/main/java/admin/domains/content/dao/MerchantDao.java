@@ -23,6 +23,8 @@ public interface MerchantDao {
 
     boolean update(Merchant merchant);
 
+    boolean updateType(Integer id, Integer status);
+
     Merchant getBean(Integer id);
 
     PageList find(final List<Criterion> condition, final List<Order> sort, final int page, final int pageSize);

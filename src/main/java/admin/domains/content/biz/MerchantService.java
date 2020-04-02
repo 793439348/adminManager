@@ -25,4 +25,6 @@ public interface MerchantService {
 
     List<Merchant> getListAll();
 
+    boolean updateType(Integer id, Integer status);
+
 }

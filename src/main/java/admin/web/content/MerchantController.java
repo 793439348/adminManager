@@ -137,34 +137,11 @@ public class MerchantController extends AbstractActionController {
 
     @ResponseBody
     @RequestMapping(value = "/merchant/update", method = RequestMethod.POST)
-    public void MERCHANT_UPDATE(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public void MERCHANT_UPDATE(Merchant merchant,HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/merchant/update";
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
-        String nickname = request.getParameter("nickname");
-        String account = request.getParameter("account");
-        String code = request.getParameter("code");
-        Integer status = HttpUtil.getIntParameter(request, "status");
-        Integer role_id = HttpUtil.getIntParameter(request, "role_id");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String qq = request.getParameter("qq");
-        String wechat = request.getParameter("wechat");
-        Integer id = HttpUtil.getIntParameter(request, "id");
-
-        Merchant merchant = new Merchant();
-        merchant.setAccount(account);
-        merchant.setCode(code);
-        merchant.setBalance(BigDecimal.ZERO);
-        merchant.setId(id);
-        merchant.setNickname(nickname);
-        merchant.setStatus(status);
-        merchant.setRoleId(role_id);
-        merchant.setPhone(phone);
-        merchant.setEmail(email);
-        merchant.setQq(qq);
-        merchant.setWechat(wechat);
         log.info("Merchant Modify Info:{}", merchant);
 
         if (uEntity != null) {
@@ -195,5 +172,13 @@ public class MerchantController extends AbstractActionController {
         List<Merchant> listAll = merchantService.getListAll();
 
         HttpUtil.write(response, JSON.toJSONString(listAll), "text/json");
+    }
+    @ResponseBody
+    @RequestMapping(value = "/merchant/modify-type", method = RequestMethod.POST)
+    public void modifyType(Integer id,Integer status,HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+
+        log.info("modify type:{} == {}",id,status);
+        boolean b = merchantService.updateType(id, status);
+        HttpUtil.write(response, JSON.toJSONString(b), "text/json");
     }
 }

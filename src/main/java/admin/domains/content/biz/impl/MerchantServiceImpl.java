@@ -75,4 +75,9 @@ public class MerchantServiceImpl implements MerchantService {
     public List<Merchant> getListAll() {
         return merchantDao.findAll();
     }
+
+    @Override
+    public boolean updateType(Integer id, Integer status) {
+        return merchantDao.updateType(id,status);
+    }
 }
