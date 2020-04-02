@@ -86,13 +86,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">状态</label>
+                                    <div class="col-md-9">
+                                        <input type="radio" name="status" value="1" checked="">启用
+                                        <input type="radio" name="status" value="2">停用
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-3 control-label">移动端模板</label>
                                     <div class="col-md-9">
                                         <select id="add-temp" name="templete" onchange="showTempIMG(this)">
 
                                         </select>
-
-                                        <img src="" alt="预览图">
+                                        <br/>
+                                        <img src="" alt="预览图" width="40" height="40">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -101,17 +108,11 @@
                                         <select id="add-mtemp" name="templete" onchange="showTempIMG(this)">
 
                                         </select>
+                                        <br/>
+                                        <img src="" alt="预览图" width="40" height="40">
+                                    </div>
+                                </div>
 
-                                        <img src="" alt="预览图">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">状态</label>
-                                    <div class="col-md-9">
-                                        <input type="radio" name="status" value="1" checked="">启用
-                                        <input type="radio" name="status" value="2">停用
-                                    </div>
-                                </div>
 
                             </div>
                         </form>
@@ -250,11 +251,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">状态</label>
+                                    <div id="status" class="col-md-9">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-3 control-label">移动端模板</label>
                                     <div class="col-md-9">
                                         <select id="modify-temp" name="templete" onchange="showTempIMG(this)">
 
                                         </select>
+                                        <br/>
                                         <img id="b-templete" src="" alt="图片" width="40" height="40">
                                     </div>
                                 </div>
@@ -264,15 +272,11 @@
                                         <select id="modify-mtemp" name="mtemplete" onchange="showTempIMG(this)">
 
                                         </select>
+                                        <br/>
                                         <img id="b-mtemplete" src="" alt="图片" width="40" height="40">
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">状态</label>
-                                    <div id="status" class="col-md-9">
 
-                                    </div>
-                                </div>
 
                             </div>
                         </form>
@@ -488,25 +492,47 @@
             success: function (list) {
                 var innerhtml1 = '';
                 var innerhtml2 = '';
+                var boo1 = true;
+                var boo2 = true;
+                var src1 = '';
+                var src2 = '';
                 $.each(list,function (idx, val) {
                     if (val.type == 1) {
                         /*手机端*/
-                        innerhtml1 +='<option value="'+val.code+'">'+val.code+'</option>'
+                        innerhtml1 +='<option value="'+val.code+'">'+val.code+'</option>';
+                        if (boo1) {
+                            src1 = val.smallImage;
+                            boo1 = false;
+                        }
                     }else if (val.type == 2) {
                         /*pc端*/
-                        innerhtml2 +='<option value="'+val.code+'">'+val.code+'</option>'
+                        innerhtml2 +='<option value="'+val.code+'">'+val.code+'</option>';
+                        if (boo2){
+                            src2 = val.smallImage;
+                            boo2 = false;
+                        }
                     }
                 });
                 $(obj1).html(innerhtml1);
                 $(obj2).html(innerhtml2);
+                $(obj1).next().next().attr("src", src1);
+                $(obj2).next().next().attr("src", src2);
 
             }
         });
     }
 
     function showTempIMG(obj) {
-            alert("xx")
-        alert($(obj).next().attr("alt"))
+        var code = $(obj.options[obj.selectedIndex]).val();
+        $.ajax({
+            type: 'post',
+            url: '/site-template/getbycode',
+            data: 'code='+code,
+            dataType: "json",
+            success: function (data) {
+                $(obj).next().next().attr("src",data.smallImage);
+            }
+        })
     }
 
     function findMerchant(obj) {

@@ -123,4 +123,11 @@ public class SiteTemplateController extends AbstractActionController {
         SiteTemplate siteTemplate = siteTemplateService.getBean(id);
         HttpUtil.write(response, JSON.toJSONString(siteTemplate),"text/json");
     }
+    @ResponseBody
+    @RequestMapping(value = "/site-template/getbycode", method = RequestMethod.POST)
+    public void getMerchantByCode(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        String code = request.getParameter("code");
+        SiteTemplate siteTemplate = siteTemplateService.getBeanByCode(code);
+        HttpUtil.write(response, JSON.toJSONString(siteTemplate),"text/json");
+    }
 }

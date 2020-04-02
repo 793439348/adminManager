@@ -64,7 +64,14 @@
                             <div class="form-body">
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">品牌名称</label>
+                                    <label class="col-md-3 control-label">品牌</label>
+                                    <div class="col-md-9">
+                                        <input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
+                                        <span class="help-inline" data-default="请选择品牌名称。"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">商户</label>
                                     <div class="col-md-9">
                                         <input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
                                         <span class="help-inline" data-default="请选择品牌名称。"></span>
@@ -114,7 +121,7 @@
                             <div class="form-inline">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <%--<div class="form-group">
+                                        <div class="form-group">
                                             <div class="input-group input-medium">
                                                 <span class="input-group-addon no-bg fixed">商户</span>
                                                 <input name="merchant-name" class="form-control" type="text">
@@ -122,7 +129,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group input-medium">
-                                                <span class="input-group-addon no-bg fixed">名称</span>
+                                                <span class="input-group-addon no-bg fixed">域名地址</span>
                                                 <input name="merchant-name" class="form-control" type="text">
                                             </div>
                                         </div>
@@ -130,7 +137,7 @@
                                         <div class="form-group">
                                             <a data-command="search" href="javascript:;" class="btn green-meadow"><i
                                                     class="fa fa-search"></i> 搜索</a>
-                                        </div>--%>
+                                        </div>
                                         <div class="btn-group pull-right">
                                             <button class="btn green" data-toggle="modal" data-target="#modal-merchant-brand-add">
                                                 <i class="fa fa-plus"></i> 新增域名
@@ -144,9 +151,9 @@
                             <table class="table table-hover table-light">
                                 <thead>
                                 <tr class="align-center">
-                                    <th width="10%">商户</th>
-                                    <th width="10%">品牌</th>
-                                    <%--<th width="10%">名称</th>--%>
+                                    <th width="15%">品牌</th>
+                                    <th width="15%">商户</th>
+                                <%--<th width="10%">名称</th>--%>
                                     <%--<th width="8%">类型</th>--%>
                                     <th width="16%">域名</th>
                                     <%--<th width="16%">用该域名生产代理推广链接</th>--%>
@@ -158,21 +165,21 @@
                                 </tbody>
                             </table>
                         </div>
-                        <%--<div class="page-list">
+                        <div class="page-list">
                             <div class="easyweb-pagination">
                                 <div class="infos">记录总数：<span id="totalCount" class="t">0</span>，
                                     页数：<span id="page" class="p">0</span>/
                                     <span id="totalPage" class="p">0</span>
                                 </div>
                                 <div class="pages"><a class="top" id="top">首页</a><a class="prev" id="prev">上一页</a>
-                                    &lt;%&ndash;<a class="page selected">1</a>&ndash;%&gt;
+                                    <%--<a class="page selected">1</a>--%>
                                     <a class="next" id="next">下一页</a>
                                     <a class="end" id="end">尾页</a>
                                 </div>
                                 <div class="go"><input type="number" id="inputPage"><a id="btn-go" class="btn-go">搜索</a>
                                 </div>
                             </div>
-                        </div>--%>
+                        </div>
                     </div>
                 </div>
                 <!-- END PORTLET-->
@@ -195,14 +202,14 @@
 
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">商户名</label>
+                                    <label class="col-md-3 control-label">品牌</label>
                                     <div class="col-md-9">
                                         <input id="merchantCode" name="merchantCode" class="form-control input-inline input-medium"
                                                autocomplete="off" type="text">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">品牌</label>
+                                    <label class="col-md-3 control-label">商户</label>
                                     <div class="col-md-9">
                                         <input id="brand" name="brand" class="form-control input-inline input-medium"
                                                autocomplete="off" type="text">
@@ -338,11 +345,14 @@
                             // '<td>' + val.isfalse + '</td>' +
                             // '<td>' + val.status + '</td>' +
                             '<td>' +
-                            // '<a href="javascript:;" onclick="modify('+val.id+')" class="btn default btn-xs black"><i class="fa fa-modify"></i> 修改 </a>' +
-                            '<button class="btn gray" data-toggle="modal" data-target="#modal-merchant-modify" ' +
-                            'onclick="modify('+val.id+')">' +
-                            '修改' +
-                            '</button>'+
+                                '<button class="btn gray" data-toggle="modal" data-target="#modal-merchant-modify" ' +
+                                'onclick="modify('+val.id+')">' +
+                                '修改' +
+                                '</button>'+
+                                '<button class="btn gray" data-toggle="modal" data-target="#modal-merchant-modify" ' +
+                                'onclick="dele('+val.id+')">' +
+                                '删除' +
+                                '</button>'+
                             '</td>' +
                             '</tr>';
                     });
@@ -441,6 +451,10 @@
                 window.location.reload();
             }
         });
+    }
+
+    function dele() {
+
     }
 </script>
 </body>

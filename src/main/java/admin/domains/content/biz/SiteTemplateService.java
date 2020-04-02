@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface SiteTemplateService {
 
+    SiteTemplate getBeanByCode(String code);
+
     SiteTemplate getBean(Integer id);
 
     List<SiteTemplate> findAll();

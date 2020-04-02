@@ -33,6 +33,11 @@ public class SiteTemplateServiceImpl implements SiteTemplateService {
     private SiteTemplateDao siteTemplateDao;
 
     @Override
+    public SiteTemplate getBeanByCode(String code) {
+        return siteTemplateDao.getBeanByCode(code);
+    }
+
+    @Override
     public SiteTemplate getBean(Integer id) {
 
         return siteTemplateDao.getBean(id);
