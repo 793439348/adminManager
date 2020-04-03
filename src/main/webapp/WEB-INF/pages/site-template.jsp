@@ -134,7 +134,28 @@
                             <div class="form-inline">
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="input-group input-medium">
+                                                <span class="input-group-addon no-bg fixed">模板名称</span>
+                                                <input name="merchant-name" class="form-control" type="text">
+                                            </div>
+                                        </div>
 
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon no-bg fixed">类型</span>
+                                                <select name="type" class="form-control">
+                                                    <option value="">全部</option>
+                                                    <option value="1">手机端</option>
+                                                    <option value="2">PC端</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <a data-command="search" href="javascript:;" class="btn green-meadow"><i
+                                                    class="fa fa-search"></i> 搜索</a>
+                                        </div>
                                         <div class="btn-group pull-right">
                                             <button class="btn green" data-toggle="modal" data-target="#modal-merchant-brand-add">
                                                 <i class="fa fa-plus"></i> 新增模板
@@ -318,6 +339,7 @@
                             '<button class="btn gray" data-toggle="modal" data-target="#modal-merchant-modify" ' +
                             'onclick="modify('+val.id+')">' +
                             '修改' +
+                            '删除' +
                             '</button>'+
                             '</td>' +
                             '</tr>';
