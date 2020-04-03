@@ -47,11 +47,10 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>当前位置：域名管理<i class="fa fa-angle-right"></i></li>
-                <li>域名列表</li>
             </ul>
         </div>
         <%--START 新增商户--%>
-        <div id="modal-merchant-brand-add" class="modal fade" data-backdrop="static" tabindex="-1">
+        <div id="modal-add" class="modal fade" data-backdrop="static" tabindex="-1">
             <div class="modal-dialog" style="width: 680px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -60,37 +59,13 @@
                         </button>
                     </div>
                     <div class="modal-body" style="padding: 30px 20px 15px 20px;">
-                        <form method="post" action="/merchant/add" class="form-horizontal">
-                            <div class="form-body">
+                        <form id="add-form" class="form-horizontal">
 
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">品牌</label>
-                                    <div class="col-md-9">
-                                        <input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请选择品牌名称。"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">商户</label>
-                                    <div class="col-md-9">
-                                        <input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请选择品牌名称。"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">域名</label>
-                                    <div class="col-md-9">
-                                        <input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span class="help-inline" data-default="请输入域名。"></span>
-                                    </div>
-                                </div>
-
-                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn default"><i class="fa fa-undo"></i> 返回列表</button>
-                        <button type="button" data-command="submit" onclick="sub()" class="btn green-meadow"><i class="fa fa-check"></i> 确认添加</button>
+                        <button type="button" data-command="submit" class="btn green-meadow"><i class="fa fa-check"></i> 确认添加</button>
                     </div>
                 </div>
             </div>
@@ -123,14 +98,14 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="input-group input-medium">
-                                                <span class="input-group-addon no-bg fixed">商户</span>
-                                                <input name="merchant-name" class="form-control" type="text">
+                                                <span class="input-group-addon no-bg fixed">品牌</span>
+                                                <input name="brand" class="form-control" type="text">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group input-medium">
                                                 <span class="input-group-addon no-bg fixed">域名地址</span>
-                                                <input name="merchant-name" class="form-control" type="text">
+                                                <input name="domain" class="form-control" type="text">
                                             </div>
                                         </div>
 
@@ -139,7 +114,7 @@
                                                     class="fa fa-search"></i> 搜索</a>
                                         </div>
                                         <div class="btn-group pull-right">
-                                            <button class="btn green" data-toggle="modal" data-target="#modal-merchant-brand-add">
+                                            <button id="btn-add" class="btn green" data-toggle="modal" data-target="#modal-add">
                                                 <i class="fa fa-plus"></i> 新增域名
                                             </button>
                                         </div>
@@ -212,7 +187,7 @@
                                     <label class="col-md-3 control-label">商户</label>
                                     <div class="col-md-9">
                                         <input id="brand" name="brand" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text">
+                                               autocomplete="off" type="text" readonly="readonly">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -305,36 +280,7 @@
                     var table = $('#tab-tbody');
                     var innerHtml = '';
                     $.each(list, function (idx, val) {
-                        /*var merchantType = '';
-                        if (val.status == 1) {
-                            merchantType = '<form method="post" action="">' +
-                                '<input type="radio" name="type" value="1" checked>启用' +
-                                '<input type="radio" name="type" value="2">停用' +
-                                '<input type="radio" name="type" value="3">关闭' +
-                                '<input type="radio" name="type" value="4">维护' +
-                                '</form>';
-                        } else if (val.status == 2) {
-                            merchantType = '<form method="post" action="">' +
-                                '<input type="radio" name="type" value="1" >启用' +
-                                '<input type="radio" name="type" value="2" checked>停用' +
-                                '<input type="radio" name="type" value="3">关闭' +
-                                '<input type="radio" name="type" value="4">维护' +
-                                '</form>';
-                        } else if (val.status == 3) {
-                            merchantType = '<form method="post" action="">' +
-                                '<input type="radio" name="type" value="1" >启用' +
-                                '<input type="radio" name="type" value="2">停用' +
-                                '<input type="radio" name="type" value="3" checked>关闭' +
-                                '<input type="radio" name="type" value="4">维护' +
-                                '</form>';
-                        } else if (val.status == 4) {
-                            merchantType = '<form method="post" action="">' +
-                                '<input type="radio" name="type" value="1" >启用' +
-                                '<input type="radio" name="type" value="2">停用' +
-                                '<input type="radio" name="type" value="3">关闭' +
-                                '<input type="radio" name="type" value="4" checked>维护' +
-                                '</form>';
-                        }*/
+
                         innerHtml +=
                             '<tr class="align-center" data-id="' + val.id + '">' +
                             '<td>' + val.merchantCode + '</td>' +
@@ -373,6 +319,67 @@
                 }
             });
         }
+
+        $('#btn-add').click(function () {
+            var innerhtml = '                            <div class="form-body">\n' +
+                '\n' +
+                '                                <div class="form-group">\n' +
+                '                                    <label class="col-md-3 control-label">品牌</label>\n' +
+                '                                    <div class="col-md-9">\n' +
+                '                                        <input name="brand_id" class="form-control input-inline input-medium" autocomplete="off" type="text">\n' +
+                '                                        <span class="help-inline" data-default="请选择品牌名称。"></span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '                                <div class="form-group">\n' +
+                '                                    <label class="col-md-3 control-label">域名</label>\n' +
+                '                                    <div class="col-md-9">\n' +
+                '                                        <input name="domain" class="form-control input-inline input-medium" autocomplete="off" type="text">\n' +
+                '                                        <span class="help-inline" data-default="请输入域名。"></span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '                            </div>\n'
+
+            $('#add-form').html(innerhtml);
+        })
+
+        $('#modal-add').click(function () {
+            validation(this);
+        });
+        function validation(obj) {
+            var modal = $(obj);
+            var form = modal.find('form');
+
+            form.validate({
+                rules: {
+                    domain: {
+                        required: true
+                    }
+                },
+                messages: {
+                    domain: {
+                        required: '域名不能为空！'
+                    }
+                },
+                invalidHandler: function (event, validator) {},
+                errorPlacement: function (error, element) {
+                    $(element).closest('.form-group').find('.help-inline').html('<i class="fa fa-warning"></i> ' + error.text());
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                    $(element).closest('.form-group').find('.help-inline').html('<i class="fa fa-check"></i> 填写正确。');
+                }
+            });
+            modal.find('[data-command="submit"]').unbind('click').click(function() {
+                if(form.validate().form()) {
+                    sub();
+                }
+            });
+        }
         /*/!*首页*!/
         $('#top').click(function () {
             search(".merchant-brand-domain/list", 1);
@@ -397,11 +404,11 @@
             search(".merchant-brand-domain/list", parseInt(page));
         });*/
     });
-    /*商户信息修改*/
+    /*信息修改*/
     function modify(id) {
         $.ajax({
             type: 'post',
-            url: '/merchant-brand/get',
+            url: '',
             data: "id="+id,
             dataType: 'json',
             success: function (bean) {
@@ -413,7 +420,7 @@
             }
         });
     }
-    /*新增商户提交*/
+    /*新增提交*/
     function sub() {
         var data = $("form:first").serialize()
         $.ajax({
@@ -424,17 +431,17 @@
             success: function (data) {
                 if (data == "true") {
                     alert("增加成功");
+                    $('#modal-merchant-add').modal("hide");
+                    window.location.reload();
                 }else {
                     alert("增加失败");
                 }
-                $('#modal-merchant-add').modal("hide");
-                window.location.reload();
             }
         });
     }
     /*修改商户提交*/
     function sub1() {
-        var data = $("form:last").serialize()
+        var data = $("form:last").serialize();
         alert(data)
         $.ajax({
             type: 'post',

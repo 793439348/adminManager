@@ -16,6 +16,9 @@ import java.util.List;
  * @since: 2020-03-26
  */
 public interface MerchantBrandDao {
+    boolean updateType(Integer id, Integer status);
+
+    MerchantBrand exists(String code);
 
     MerchantBrand getBean(Integer id);
 

@@ -35,6 +35,15 @@ public class MerchantServiceImpl implements MerchantService {
     private MerchantDao merchantDao;
 
     @Override
+    public boolean exists(String code, String account) {
+        Merchant exists = merchantDao.exists(code, account);
+        if (null == exists) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean add(Merchant merchant) {
         return merchantDao.add(merchant);
     }

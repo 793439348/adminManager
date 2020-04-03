@@ -47,11 +47,10 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>当前位置：商户管理<i class="fa fa-angle-right"></i></li>
-                <li>商户列表</li>
             </ul>
         </div>
         <%--START 新增商户--%>
-        <div id="modal-merchant-add" class="modal fade" data-backdrop="static" tabindex="-1">
+        <div id="modal-add" class="modal fade" data-backdrop="static" tabindex="-1">
             <div class="modal-dialog" style="width: 680px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -60,107 +59,13 @@
                         </button>
                     </div>
                     <div class="modal-body" style="padding: 30px 20px 15px 20px;">
-                        <form method="post" action="/merchant/add" class="form-horizontal">
-                            <div class="form-body">
+                        <form id="add-form" method="post" action="" class="form-horizontal">
 
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">商户别名</label>
-                                    <div class="col-md-9">
-                                        <input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span>请填写商户别名</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">商户Id</label>
-                                    <div class="col-md-9">
-                                        <input name="code" class="form-control input-inline input-medium" autocomplete="off" type="text" minlength="4" maxlength="4">
-                                        <span>请填写长度为4的商户Id</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">商户账号</label>
-                                    <div class="col-md-9">
-                                        <input name="account" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span>请输入商户账号</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">密码</label>
-                                    <div class="col-md-9">
-                                        <input name="pwd1" class="form-control input-inline input-medium" autocomplete="off" type="password">
-                                        <span>请输入密码</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">确认密码</label>
-                                    <div class="col-md-9">
-                                        <input name="pwd2" class="form-control input-inline input-medium" autocomplete="off" type="password">
-                                        <span>请确认密码</span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">状态</label>
-                                    <div class="col-md-9">
-                                        <input type="radio" name="status" value="1" checked="checked">启用
-                                        <input type="radio" name="status" value="2">停用
-                                        <input type="radio" name="status" value="3">关闭
-                                        <input type="radio" name="status" value="4">维护
-                                    </div>
-                                </div>
-                                <div class="form-group has-success">
-                                    <label class="col-md-3 control-label">角色</label>
-                                    <div class="col-md-9">
-                                        <select name="role_id" class="form-control input-medium" aria-invalid="false">
-                                            <option value="1" selected="selected">超级管理员</option>
-                                            <option value="2">运营主管</option>
-                                            <option value="3">客服专员</option>
-                                            <option value="4">财务组长</option>
-                                            <option value="5">普通客服</option>
-                                            <option value="6">充值专员</option>
-                                            <option value="7">打款专员</option>
-                                            <option value="9">客服组长</option>
-                                            <option value="10">风控专员</option>
-                                            <option value="11">风控组长</option>
-                                            <option value="12">审计组长</option>
-                                            <option value="13">审计专员</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">手机</label>
-                                    <div class="col-md-9">
-                                        <input name="phone" class="form-control input-inline input-medium" autocomplete="off" type="text">
-                                        <span>请填写手机号</span>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label">邮箱</label>
-                                    <div class="col-md-9">
-                                        <input name="email" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                        <span>请填写邮箱</span>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label">qq</label>
-                                    <div class="col-md-9">
-                                        <input name="qq" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                        <span>请填写qq</span>
-                                    </div>
-                                </div>
-                                <div class="form-group" >
-                                    <label class="col-md-3 control-label">微信</label>
-                                    <div class="col-md-9">
-                                        <input name="wechat" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
-                                        <span>请填写微信</span>
-                                    </div>
-                                </div>
-
-                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn default"><i class="fa fa-undo"></i> 返回列表</button>
-                        <button type="button" data-command="submit" onclick="sub()" class="btn green-meadow"><i class="fa fa-check"></i> 确认添加</button>
+                        <button type="button" id="break-add" data-dismiss="modal" class="btn default"><i class="fa fa-undo"></i> 返回列表</button>
+                        <button type="button" data-command="submit" class="btn green-meadow"><i class="fa fa-check"></i> 确认添加</button>
                     </div>
                 </div>
             </div>
@@ -220,7 +125,7 @@
                                                     class="fa fa-search"></i> 搜索</a>
                                         </div>
                                         <div class="btn-group pull-right">
-                                            <button class="btn green" data-toggle="modal" data-target="#modal-merchant-add">
+                                            <button  id="btn-add" class="btn green" data-toggle="modal" data-target="#modal-add">
                                                 <i class="fa fa-plus"></i> 新增商户
                                             </button>
                                         </div>
@@ -271,7 +176,7 @@
         <!-- END PAGE CONTENT-->
 
         <%--START 商户修改--%>
-        <div id="modal-merchant-modify" class="modal fade" data-backdrop="static" tabindex="-1">
+        <div id="modal-modify" class="modal fade" data-backdrop="static" tabindex="-1">
             <div class="modal-dialog" style="width: 680px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -280,34 +185,36 @@
                         </button>
                     </div>
                     <div class="modal-body" style="padding: 30px 20px 15px 20px;">
-                        <form method="post" action="/merchant/update" class="form-horizontal">
+                        <form method="post" action="" class="form-horizontal">
                             <div class="form-body">
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">商户别名</label>
                                     <div class="col-md-9">
-                                        <input id="nickname" name="nickname" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text">
+                                        <input id="nickname" name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">
+                                        <span class="help-inline" data-default=""></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">商户Id</label>
                                     <div class="col-md-9">
-                                        <input id="code" name="code" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text" readonly="readonly">
+                                        <input id="code" name="code" class="form-control input-inline input-medium" autocomplete="off" type="text"
+                                               required readonly="readonly">
+                                        <span class="help-inline" data-default=""></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">商户账号</label>
                                     <div class="col-md-9">
-                                        <input id="name" name="account" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text" readonly="readonly">
+                                        <input id="name" name="account" class="form-control input-inline input-medium" autocomplete="off" type="text"
+                                               required readonly="readonly">
+                                        <span class="help-inline" data-default=""></span>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">状态</label>
-                                    <div id="status" class="col-md-9">
+                                    <div class="col-md-9">
                                         <input id="status1" type="radio" name="status" value="1">启用
                                         <input id="status2" type="radio" name="status" value="2">停用
                                         <input id="status3" type="radio" name="status" value="3">关闭
@@ -318,7 +225,7 @@
                                     <label class="col-md-3 control-label">角色</label>
                                     <div class="col-md-9">
                                         <select id="role_id" name="roleId" class="form-control input-medium" aria-invalid="false">
-                                            <option value="1" selected="selected">超级管理员</option>
+                                            <option value="1">超级管理员</option>
                                             <option value="2">运营主管</option>
                                             <option value="3">客服专员</option>
                                             <option value="4">财务组长</option>
@@ -336,25 +243,29 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">手机</label>
                                     <div class="col-md-9">
-                                        <input id="phone" name="phone" class="form-control input-inline input-medium" autocomplete="off" type="text">
+                                        <input id="phone" name="phone" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
+                                        <span class="help-inline" data-default="">请填写手机号</span>
                                     </div>
                                 </div>
                                 <div class="form-group" >
                                     <label class="col-md-3 control-label">邮箱</label>
                                     <div class="col-md-9">
                                         <input id="email" name="email" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
+                                        <span class="help-inline" data-default="">请填写邮箱</span>
                                     </div>
                                 </div>
                                 <div class="form-group" >
                                     <label class="col-md-3 control-label">qq</label>
                                     <div class="col-md-9">
                                         <input id="qq" name="qq" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
+                                        <span class="help-inline" data-default="">请填写qq</span>
                                     </div>
                                 </div>
                                 <div class="form-group" >
                                     <label class="col-md-3 control-label">微信</label>
                                     <div class="col-md-9">
                                         <input id="wechat" name="wechat" class="form-control input-inline input-medium" autocomplete="off" type="text" required>
+                                        <span class="help-inline" data-default="">请填写微信</span>
                                     </div>
                                 </div>
                                 <div class="form-group" >
@@ -367,8 +278,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn default"><i class="fa fa-undo"></i> 返回列表</button>
-                        <button type="button" data-command="submit" onclick="sub1()" class="btn green-meadow"><i class="fa fa-check"></i> 确认修改</button>
+                        <button type="button" id="break-modify" data-dismiss="modal" class="btn default"><i class="fa fa-undo"></i> 返回列表</button>
+                        <button type="button" data-command="submit" class="btn green-meadow"><i class="fa fa-check"></i> 确认修改</button>
                     </div>
                 </div>
             </div>
@@ -427,6 +338,366 @@
         });
 
 
+
+        $('#modal-add').click(function () {
+            addValidation(this);
+        });
+        $('#modal-modify').click(function () {
+            modifyValidation(this);
+        });
+        $('#btn-add').click(function () {
+            var innerhtml = '<div class="form-body">' +
+                '<div class="form-group">' +
+                '<label class="col-md-3 control-label">商户别名</label>' +
+                '<div class="col-md-9">' +
+                '<input name="nickname" class="form-control input-inline input-medium" autocomplete="off" type="text">' +
+                '<span class="help-inline" data-default="">请填写商户别名</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label class="col-md-3 control-label">商户Id</label>' +
+                '<div class="col-md-9">\n' +
+                '<input name="code" class="form-control input-inline input-medium" autocomplete="off" type="text"' +
+                ' required>' +
+                '<span class="help-inline" data-default="">请填写商户Id</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label class="col-md-3 control-label">商户账号</label>' +
+                '<div class="col-md-9">' +
+                '<input name="account" class="form-control input-inline input-medium" autocomplete="off" type="text" required>' +
+                '<span class="help-inline" data-default="">请输入商户账号</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label class="col-md-3 control-label">密码</label>' +
+                '<div class="col-md-9">' +
+                '<input name="pwd1" class="form-control input-inline input-medium" autocomplete="off" type="password" required>' +
+                '<span class="help-inline" data-default="">请输入密码</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label class="col-md-3 control-label">确认密码</label>' +
+                '<div class="col-md-9">' +
+                '<input name="pwd2" class="form-control input-inline input-medium" autocomplete="off" type="password" required>' +
+                '<span class="help-inline" data-default="">请确认密码</span>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<label class="col-md-3 control-label">状态</label>' +
+                '<div class="col-md-9">' +
+                '<div class="radio-list">' +
+                '<input type="radio" name="status" value="1" checked="checked">启用' +
+                '<input type="radio" name="status" value="2">停用' +
+                '<input type="radio" name="status" value="3">关闭' +
+                '<input type="radio" name="status" value="4">维护' +
+                '</div>' +
+                '</div>' +
+                '</div>\n' +
+                '<div class="form-group has-success">\n' +
+                '                                    <label class="col-md-3 control-label">角色</label>\n' +
+                '                                    <div class="col-md-9">\n' +
+                '                                        <select name="role_id" class="form-control input-medium" aria-invalid="false">\n' +
+                '                                            <option value="1" selected="selected">超级管理员</option>\n' +
+                '                                            <option value="2">运营主管</option>\n' +
+                '                                            <option value="3">客服专员</option>\n' +
+                '                                            <option value="4">财务组长</option>\n' +
+                '                                            <option value="5">普通客服</option>\n' +
+                '                                            <option value="6">充值专员</option>\n' +
+                '                                            <option value="7">打款专员</option>\n' +
+                '                                            <option value="9">客服组长</option>\n' +
+                '                                            <option value="10">风控专员</option>\n' +
+                '                                            <option value="11">风控组长</option>\n' +
+                '                                            <option value="12">审计组长</option>\n' +
+                '                                            <option value="13">审计专员</option>\n' +
+                '                                        </select>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="form-group">\n' +
+                '                                    <label class="col-md-3 control-label">手机</label>\n' +
+                '                                    <div class="col-md-9">\n' +
+                '                                        <input name="phone" class="form-control input-inline input-medium" autocomplete="off" type="text" required>\n' +
+                '                                        <span class="help-inline" data-default="">请填写手机号</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="form-group" >\n' +
+                '                                    <label class="col-md-3 control-label">邮箱</label>\n' +
+                '                                    <div class="col-md-9">\n' +
+                '                                        <input name="email" class="form-control input-inline input-medium" autocomplete="off" type="text" required>\n' +
+                '                                        <span class="help-inline" data-default="">请填写邮箱</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="form-group" >\n' +
+                '                                    <label class="col-md-3 control-label">qq</label>\n' +
+                '                                    <div class="col-md-9">\n' +
+                '                                        <input name="qq" class="form-control input-inline input-medium" autocomplete="off" type="text" required>\n' +
+                '                                        <span class="help-inline" data-default="">请填写qq</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="form-group" >\n' +
+                '                                    <label class="col-md-3 control-label">微信</label>\n' +
+                '                                    <div class="col-md-9">\n' +
+                '                                        <input name="wechat" class="form-control input-inline input-medium" autocomplete="off" type="text" required>\n' +
+                '                                        <span class="help-inline" data-default="">请填写微信</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                            </div>';
+
+            $('#add-form').html(innerhtml);
+        })
+        function addValidation(obj) {
+            var modal = $(obj);
+            var form = modal.find('form');
+            // 手机号码验证
+            jQuery.validator.addMethod("isPhone", function(value, element) {
+                var length = value.length;
+                return this.optional(element) || (length == 11 && /^[1][3,4,5,7,8][0-9]{9}$/.test(value));
+            }, "请正确填写您的手机号码。");
+            // 邮箱验证
+            jQuery.validator.addMethod("isEmail",function (val, element) {
+                return this.optional(element) || (/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/.test(val));
+            },"请填写正确的邮箱。");
+            // qq验证
+            jQuery.validator.addMethod("isQQ",function (val, element) {
+                return this.optional(element) || (/[1-9][0-9]{4,14}/.test(val));
+            },"请填写正确的QQ号码。");
+            // 微信验证
+            jQuery.validator.addMethod("isWechat",function (val, element) {
+                return this.optional(element) || (/^[a-zA-Z\d_]{5,}$/.test(val));
+            },"请填写正确的微信号。");
+            // 非法字符
+            jQuery.validator.addMethod("isInegal",function (val, element) {
+                return this.optional(element) || (/^[0-9a-zA-Z_]{1,}$/.test(val));
+            },"包含非法字符，只能使用字母、数字、下划线。");
+            form.validate({
+                rules: {
+                    nickname: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 20
+                    },
+                    code: {
+                        required: true,
+                        minlength: 4,
+                        maxlength: 4,
+                        remote: {
+                            url: '/merchant/exists',
+                            type: 'post'
+                        },
+                        isInegal: true
+                    },
+                    account: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 20,
+                        remote: {
+                            url: '/merchant/exists',
+                            type: 'post'
+                        },
+                        isInegal: true
+                    },
+                    pwd1: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 20
+                    },
+                    pwd2: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 20,
+                        equalTo: 'input[name="pwd1"]'
+                    },
+                    phone: {
+                        required: true,
+                        isPhone: true
+                    },
+                    email:{
+                        required: true,
+                        isEmail: true
+                    },
+                    qq:{
+                        required: true,
+                        isQQ: true
+                    },
+                    wechat:{
+                        required: true,
+                        isWechat: true
+                    }
+                },
+                messages: {
+                    nickname: {
+                        required: '商户别名不能为空！',
+                        minlength: '至少输入{0}个字符',
+                        maxlength: '最多输入{0}个字符'
+                    },
+                    code: {
+                        required: '商户Id不能为空！',
+                        minlength: '至少输入{0}个字符',
+                        maxlength: '最多输入{0}个字符',
+                        remote: '商户Id已存在！'
+                    },
+                    account: {
+                        required: '商户账号不能为空！',
+                        minlength: '至少输入{0}个字符',
+                        maxlength: '最多输入{0}个字符',
+                        remote: '商户账号已存在！'
+                    },
+                    pwd1: {
+                        required: '密码不能为空！',
+                        minlength: '至少输入{0}个字符',
+                        maxlength: '最多输入{0}个字符'
+                    },
+                    pwd2: {
+                        required: '确认密码不能为空！',
+                        equalTo: '两次密码不一致！',
+                        minlength: '至少输入{0}个字符',
+                        maxlength: '最多输入{0}个字符'
+                    },
+                    phone: {
+                        required: '手机号不能为空！'
+                    },
+                    email: {
+                        required: '邮箱不能为空！'
+                    },
+                    qq: {
+                        required: '手机号不能为空！'
+                    },
+                    wechat: {
+                        required: '微信号不能为空！'
+                    }
+                },
+                invalidHandler: function (event, validator) {},
+                errorPlacement: function (error, element) {
+                    $(element).closest('.form-group').find('.help-inline').html('<i class="fa fa-warning"></i> ' + error.text());
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                    $(element).closest('.form-group').find('.help-inline').html('<i class="fa fa-check"></i> 填写正确。');
+                }
+            });
+            modal.find('[data-command="submit"]').unbind('click').click(function() {
+                if(form.validate().form()) {
+                    sub();
+                }
+            });
+        }
+        function modifyValidation(obj) {
+            var modal = $(obj);
+            var form = modal.find('form');
+            // 手机号码验证
+            jQuery.validator.addMethod("isPhone", function(value, element) {
+                var length = value.length;
+                return this.optional(element) || (length == 11 && /^[1][3,4,5,7,8][0-9]{9}$/.test(value));
+            }, "请正确填写您的手机号码。");
+            // 邮箱验证
+            jQuery.validator.addMethod("isEmail",function (val, element) {
+                return this.optional(element) || (/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$/.test(val));
+            },"请填写正确的邮箱。");
+            // qq验证
+            jQuery.validator.addMethod("isQQ",function (val, element) {
+                return this.optional(element) || (/[1-9][0-9]{4,14}/.test(val));
+            },"请填写正确的QQ号码。");
+            // 微信验证
+            jQuery.validator.addMethod("isWechat",function (val, element) {
+                return this.optional(element) || (/^[a-zA-Z\d_]{5,}$/.test(val));
+            },"请填写正确的微信号。");
+            // 非法字符
+            jQuery.validator.addMethod("isInegal",function (val, element) {
+                return this.optional(element) || (/^[0-9a-zA-Z_]{1,}$/.test(val));
+            },"包含非法字符，只能使用字母、数字、下划线。");
+            form.validate({
+                rules: {
+                    nickname: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 20
+                    },
+                    code: {
+                        required: true,
+                        minlength: 4,
+                        maxlength: 4,
+                        /*remote: {
+                            url: '',
+                            type: 'post'
+                        },*/
+                        isInegal: true
+                    },
+                    account: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 20,
+                        isInegal: true
+                    },
+                    phone: {
+                        required: true,
+                        isPhone: true
+                    },
+                    email:{
+                        required: true,
+                        isEmail: true
+                    },
+                    qq:{
+                        required: true,
+                        isQQ: true
+                    },
+                    wechat:{
+                        required: true,
+                        isWechat: true
+                    }
+                },
+                messages: {
+                    nickname: {
+                        required: '商户别名不能为空！',
+                        minlength: '至少输入{0}个字符',
+                        maxlength: '最多输入{0}个字符'
+                    },
+                    code: {
+                        required: '商户Id不能为空！',
+                        minlength: '至少输入{0}个字符',
+                        maxlength: '最多输入{0}个字符'
+                        /*,
+                        remote: '商户Id已存在！'*/
+                    },
+                    account: {
+                        required: '商户账号不能为空！',
+                        minlength: '至少输入{0}个字符',
+                        maxlength: '最多输入{0}个字符',
+                        remote: '商户账号已存在！'
+                    },
+                    phone: {
+                        required: '手机号不能为空！'
+                    },
+                    email: {
+                        required: '邮箱不能为空！'
+                    },
+                    qq: {
+                        required: '手机号不能为空！'
+                    },
+                    wechat: {
+                        required: '微信号不能为空！'
+                    }
+                },
+                invalidHandler: function (event, validator) {},
+                errorPlacement: function (error, element) {
+                    $(element).closest('.form-group').find('.help-inline').html('<i class="fa fa-warning"></i> ' + error.text());
+                },
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                unhighlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                    $(element).closest('.form-group').find('.help-inline').html('<i class="fa fa-check"></i> 填写正确。');
+                }
+            });
+            modal.find('[data-command="submit"]').unbind('click').click(function() {
+                if(form.validate().form()) {
+                    sub1();
+                }
+            });
+        }
         function search(url, page) {
             var end = $('#end').val();
             if (end && page > end) {
@@ -491,7 +762,7 @@
                             '<td>' + val.loginTime + '</td>' +
                             '<td>' +
                             // '<a href="javascript:;" onclick="modify('+val.id+')" class="btn default btn-xs black"><i class="fa fa-modify"></i> 修改 </a>' +
-                            '<button class="btn gray" data-toggle="modal" data-target="#modal-merchant-modify" ' +
+                            '<button class="btn gray" data-toggle="modal" data-target="#modal-modify" ' +
                             'onclick="modify('+val.id+')">' +
                             '修改' +
                             '</button>'+
@@ -521,11 +792,10 @@
                 }
             });
         }
-
         /*首页*/
         $('#top').click(function () {
             search("./merchant/list", 1);
-        })
+        });
         /*尾页*/
         $('#end').click(function () {
             var page = $('#end').val();
@@ -589,26 +859,16 @@
                     $('#status3').attr("checked","checked");
                 if(parseInt(bean.status)==4)
                     $('#status4').attr("checked","checked");
-                $('#modal-merchant-modify').modal;
+
+                var opts = $('#role_id option');
+                $(opts[bean.roleId]).attr("selected", true);
+                $('#modal-modify').modal('show');
             }
         });
     }
     /*新增商户提交*/
     function sub() {
         var data = $("form:first").serialize();
-
-        var boo = false;
-
-        var phoneReg = '/^0?1[3|4|5|8|7][0-9]\d{8}$/';
-
-        var pwdReg = '/^[a-zA-Z0-9_]+$/';
-
-        var emailReg = '/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/';
-
-        var reQQ = '/^[1-9]\d{4,9}$/';
-
-
-
         $.ajax({
             type: 'post',
             url: '/merchant/add',
@@ -617,17 +877,17 @@
             success: function (boo) {
                 if (boo.error == "0") {
                     alert("保存成功");
-                    $('#modal-merchant-add').modal("hide");
+                    $('#modal-add').modal("hide");
                     window.location.reload();
+                }else{
+                    alert("保存失败")
                 }
-
             }
         });
     }
     /*修改商户提交*/
     function sub1() {
-        var data = $("form:last").serialize()
-        alert(data)
+        var data = $("form:last").serialize();
         $.ajax({
             type: 'post',
             url: '/merchant/update',
@@ -636,11 +896,12 @@
             success: function (data) {
                 if (data == "true") {
                     alert("修改成功");
+                    $('#modal-modify').modal("hide");
+                    window.location.reload();
                 }else{
                     alert("修改失败")
                 }
-                $('#modal-merchant-modify').modal("hide");
-                window.location.reload();
+
             }
         });
     }

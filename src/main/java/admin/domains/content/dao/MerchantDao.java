@@ -17,6 +17,8 @@ import java.util.List;
  */
 public interface MerchantDao {
 
+    Merchant exists(String code, String account);
+
     boolean add(Merchant merchant);
 
     boolean delete(Merchant merchant);

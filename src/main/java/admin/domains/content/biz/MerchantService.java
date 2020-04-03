@@ -15,6 +15,8 @@ import java.util.List;
  */
 public interface MerchantService {
 
+    boolean exists(String code, String account);
+
     boolean add(Merchant merchant);
 
     PageList search(String name,String code,Integer status,Integer page,Integer pageSize);

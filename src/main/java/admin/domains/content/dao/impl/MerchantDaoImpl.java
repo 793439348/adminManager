@@ -25,6 +25,23 @@ public class MerchantDaoImpl implements MerchantDao {
 
     @Autowired
     private HibernateSuperDao<Merchant> superDao;
+
+    @Override
+    public Merchant exists(String code, String account) {
+        StringBuffer sbf = new StringBuffer("from Merchant");
+        if (code!=null) {
+            Object[] obj = {code};
+            sbf.append(" where code = ?0");
+            return (Merchant)superDao.unique(sbf.toString(), obj);
+        }
+        if (account != null) {
+            Object[] obj = {account};
+            sbf.append(" where account = ?0");
+            return (Merchant)superDao.unique(sbf.toString(), obj);
+        }
+        return null;
+    }
+
     public boolean add(Merchant merchant) {
         return superDao.save(merchant);
     }

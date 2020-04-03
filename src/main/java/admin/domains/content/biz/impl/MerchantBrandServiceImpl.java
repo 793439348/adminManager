@@ -39,6 +39,20 @@ public class MerchantBrandServiceImpl implements MerchantBrandService {
     private SiteTemplateDao templateDao;
 
     @Override
+    public boolean updateType(Integer id, Integer status) {
+        return brandDao.updateType(id,status);
+    }
+
+    @Override
+    public boolean exists(String code) {
+        MerchantBrand exists = brandDao.exists(code);
+        if (null == exists) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public MerchantBrandVO getBean(Integer id) {
         MerchantBrand bean = brandDao.getBean(id);
         SiteTemplate template = templateDao.getBeanByCode(bean.getTemplete());

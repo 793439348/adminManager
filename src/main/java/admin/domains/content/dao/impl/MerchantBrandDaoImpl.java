@@ -25,6 +25,20 @@ public class MerchantBrandDaoImpl implements MerchantBrandDao {
     private HibernateSuperDao<MerchantBrand> superDao;
 
     @Override
+    public boolean updateType(Integer id, Integer status) {
+        String hql = "update MerchantBrand set status = ?0 where id = ?1";
+        Object[] obj = {status, id};
+        return superDao.update(hql,obj);
+    }
+
+    @Override
+    public MerchantBrand exists(String code) {
+        String hql = "from MerchantBrand where code = ?0";
+        Object[] obj = {code};
+        return (MerchantBrand)superDao.unique(hql,obj);
+    }
+
+    @Override
     public MerchantBrand getBean(Integer id) {
         String hql = "from MerchantBrand where id = ?0";
         Object[] objs = {id};

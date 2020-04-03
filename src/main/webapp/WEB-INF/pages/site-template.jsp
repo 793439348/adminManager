@@ -47,7 +47,6 @@
         <div class="page-bar">
             <ul class="page-breadcrumb">
                 <li>当前位置：模板管理<i class="fa fa-angle-right"></i></li>
-                <li>模板列表</li>
             </ul>
         </div>
         <%--START 新增模板--%>

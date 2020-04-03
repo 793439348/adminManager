@@ -179,6 +179,13 @@ public class MerchantController extends AbstractActionController {
 
         log.info("modify type:{} == {}",id,status);
         boolean b = merchantService.updateType(id, status);
-        HttpUtil.write(response, JSON.toJSONString(b), "text/json");
+        HttpUtil.write(response, JSON.toJSONString(b), "text");
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/merchant/exists", method = RequestMethod.POST)
+    public void exists(String code,String account,HttpSession session, HttpServletRequest request, HttpServletResponse response){
+        HttpUtil.write(response,String.valueOf(merchantService.exists(code,account)),"text");
     }
 }
