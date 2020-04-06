@@ -49,8 +49,10 @@ public class SiteTemplateDaoImpl implements SiteTemplateDao {
         return superDao.save(siteTemplate);
     }
 
-    public boolean delete(SiteTemplate siteTemplate) {
-        return superDao.delete(siteTemplate);
+    public boolean delete(Integer id) {
+        String hql = "delete from SiteTemplate where id = ?0";
+        Object[] obj = {id};
+        return superDao.delete(hql,obj);
     }
 
     public boolean update(SiteTemplate siteTemplate) {

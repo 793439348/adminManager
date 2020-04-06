@@ -17,6 +17,7 @@ import lombok.Data;
 public class MerchantDomainVO {
     private Integer id ;
     private String merchantCode;
+    private Integer brandId;
     private String brandName;
     private String name;
     private Integer type;
@@ -30,6 +31,7 @@ public class MerchantDomainVO {
     public MerchantDomainVO(Merchant merchant, MerchantBrand brand,MerchantBrandDomain domain) {
         this.id = domain.getId();
         this.merchantCode = merchant.getCode();
+        this.brandId = brand.getId();
         this.brandName = brand.getName();
         this.domain = domain.getDomain();
         this.type = 0;

@@ -99,13 +99,15 @@
                                         <div class="form-group">
                                             <div class="input-group input-medium">
                                                 <span class="input-group-addon no-bg fixed">品牌</span>
-                                                <input name="brand" class="form-control" type="text">
+                                                <select id="search-brand" name="brand">
+
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="input-group input-medium">
                                                 <span class="input-group-addon no-bg fixed">域名地址</span>
-                                                <input name="domain" class="form-control" type="text">
+                                                <input id="search-domain" name="domain" class="form-control" type="text">
                                             </div>
                                         </div>
 
@@ -163,7 +165,7 @@
         <!-- END PAGE CONTENT-->
 
         <%--START 域名修改--%>
-        <div id="modal-merchant-modify" class="modal fade" data-backdrop="static" tabindex="-1">
+        <div id="modal-modify" class="modal fade" data-backdrop="static" tabindex="-1">
             <div class="modal-dialog" style="width: 680px;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -172,22 +174,16 @@
                         </button>
                     </div>
                     <div class="modal-body" style="padding: 30px 20px 15px 20px;">
-                        <form method="post" action="/merchant/update" class="form-horizontal">
+                        <form class="form-horizontal">
                             <div class="form-body">
 
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">品牌</label>
                                     <div class="col-md-9">
-                                        <input id="merchantCode" name="merchantCode" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label">商户</label>
-                                    <div class="col-md-9">
-                                        <input id="brand" name="brand" class="form-control input-inline input-medium"
-                                               autocomplete="off" type="text" readonly="readonly">
+                                        <select id="brand" name="brandId" >
+
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -195,6 +191,13 @@
                                     <div class="col-md-9">
                                         <input id="domain" name="domain" class="form-control input-inline input-medium"
                                                autocomplete="off" type="text">
+                                        <span class="help-inline" data-default="">请填写微信</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-9">
+                                        <input id="id" name="id" class="form-control input-inline input-medium"
+                                               autocomplete="off" type="hidden">
                                     </div>
                                 </div>
 
@@ -204,7 +207,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn default"><i class="fa fa-undo"></i> 返回列表</button>
-                        <button type="button" data-command="submit" onclick="sub1()" class="btn green-meadow"><i class="fa fa-check"></i> 确认修改</button>
+                        <button type="button" data-command="submit" class="btn green-meadow"><i class="fa fa-check"></i> 确认修改</button>
                     </div>
                 </div>
             </div>
@@ -256,30 +259,35 @@
     $(document).ready(function () {
         var tableList = $('#table-merchant-list');
         var tablePagelist = tableList.find('.page-list');
-        search("/merchant-brand-domain/list");
+        brandList($('#search-brand'),-1);
+        search("./merchant-brand-domain/search",0);
+
         tableList.find('[data-command="search"]').unbind('click').click(function () {
-            // var page = $('#page').text();
-            search("/merchant-brand-domain/list");
+            var page = $('#page').text();
+            search("./merchant-brand-domain/search",page);
         });
-        function search(url) {
-            /*var end = $('#end').val();
+        function search(url,page) {
+            var end = $('#end').val();
             if (end && page > end) {
                 page = end;
             }
             if (page <= 0) {
                 page = 1;
-            }*/
-            // var merchantname = tableList.find('input[name=merchant-name]').val();
-            var data = {};
+            }
+
+            var obj = $('#search-brand');
+            var brand = obj.find("option:selected").val();
+            var domain = $('#search-domain').val();
+            var data = {brand:brand,domain:domain,page:(page - 1)*10,pageSize:10};
             $.ajax({
                 type: 'post',
                 url: url,
-                data: '',
+                data: data,
                 dataType: 'json',
                 success: function (list) {
                     var table = $('#tab-tbody');
                     var innerHtml = '';
-                    $.each(list, function (idx, val) {
+                    $.each(list.data, function (idx, val) {
 
                         innerHtml +=
                             '<tr class="align-center" data-id="' + val.id + '">' +
@@ -291,11 +299,11 @@
                             // '<td>' + val.isfalse + '</td>' +
                             // '<td>' + val.status + '</td>' +
                             '<td>' +
-                                '<button class="btn gray" data-toggle="modal" data-target="#modal-merchant-modify" ' +
+                                '<button class="btn gray" data-toggle="modal" data-target="#modal-modify" ' +
                                 'onclick="modify('+val.id+')">' +
                                 '修改' +
                                 '</button>'+
-                                '<button class="btn gray" data-toggle="modal" data-target="#modal-merchant-modify" ' +
+                                '<button class="btn gray" data-toggle="modal" ' +
                                 'onclick="dele('+val.id+')">' +
                                 '删除' +
                                 '</button>'+
@@ -303,15 +311,15 @@
                             '</tr>';
                     });
                     table.html(innerHtml);
-                    /*var totalCount = list.totalCount;
-                    var tatalPage = Math.ceil(totalCount / 1);
+                    var totalCount = list.totalCount;
+                    var tatalPage = Math.ceil(totalCount / 10);
                     $('#totalCount').text(totalCount);
                     $('#page').text(page);
                     $('#totalPage').text(tatalPage);
                     $('#end').val(tatalPage);
-                    $('#inputPage').val();*/
+                    $('#inputPage').val();
                     /*查询结果为空*/
-                    if (list.length == 0) {
+                    if (list.data.length == 0) {
                         var tds = tableList.find('thead tr th').size();
                         tableList.find('table > tbody').html('<tr><td colspan="' + tds + '">没有相关数据</td></tr>');
                         $('#page').text(0);
@@ -326,11 +334,9 @@
                 '                                <div class="form-group">\n' +
                 '                                    <label class="col-md-3 control-label">品牌</label>\n' +
                 '                                    <div class="col-md-9">\n' +
-                '                                        <input name="brand_id" class="form-control input-inline input-medium" autocomplete="off" type="text">\n' +
-                '                                        <span class="help-inline" data-default="请选择品牌名称。"></span>\n' +
+                            '<select id="add-brand" name="brandId"></select>' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
-                '\n' +
                 '                                <div class="form-group">\n' +
                 '                                    <label class="col-md-3 control-label">域名</label>\n' +
                 '                                    <div class="col-md-9">\n' +
@@ -340,14 +346,17 @@
                 '                                </div>\n' +
                 '\n' +
                 '                            </div>\n'
-
             $('#add-form').html(innerhtml);
+            brandList($("#add-brand"), 0);
         })
 
         $('#modal-add').click(function () {
-            validation(this);
+            validation(this,"add");
         });
-        function validation(obj) {
+        $('#modal-modify').click(function () {
+            validation(this,"modify");
+        })
+        function validation(obj,action) {
             var modal = $(obj);
             var form = modal.find('form');
 
@@ -376,47 +385,56 @@
             });
             modal.find('[data-command="submit"]').unbind('click').click(function() {
                 if(form.validate().form()) {
-                    sub();
+                    if (action == "add")
+                        sub();
+                    else if(action == "modify")
+                        sub1();
                 }
             });
         }
-        /*/!*首页*!/
+        /*首页*/
         $('#top').click(function () {
-            search(".merchant-brand-domain/list", 1);
+            search("./merchant-brand-domain/search", 1);
         })
-        /!*尾页*!/
+        /*尾页*/
         $('#end').click(function () {
             var page = $('#end').val();
-            search(".merchant-brand-domain/list", parseInt(page));
+            search("./merchant-brand-domain/search", parseInt(page));
         });
-        /!*上页*!/
+        /*上页*/
         $('#prev').click(function () {
             var page = $('#page').text();
-            search(".merchant-brand-domain/list", parseInt(page) - 1);
+            search("./merchant-brand-domain/search", parseInt(page) - 1);
         });
-        /!*下页*!/
+        /*下页*/
         $('#next').click(function () {
             var page = $('#page').text();
-            search(".merchant-brand-domain/list", parseInt(page) + 1);
+            search("./merchant-brand-domain/search", parseInt(page) + 1);
         });
         $('#btn-go').click(function () {
             var page = $('#inputPage').val();
-            search(".merchant-brand-domain/list", parseInt(page));
-        });*/
+            if(!page || page == ''){
+                page = 1;
+            }
+            search("./merchant-brand-domain/search", parseInt(page));
+        });
     });
     /*信息修改*/
     function modify(id) {
+        var brand ;
         $.ajax({
             type: 'post',
-            url: '',
+            url: '/merchant-brand-domain/get',
             data: "id="+id,
             dataType: 'json',
             success: function (bean) {
-                $('#merchantCode').val(bean.merchantCode);
-                $('#brand').val(bean.brand);
-                $('#domain').val(bean.domain);
+                // $('#merchantCode').val(bean.merchantCode);
+                brand = parseInt(bean.brandId);
+                brandList($('#brand'), brand-1);
 
-                $('#modal-merchant-modify').modal;
+                $('#domain').val(bean.domain);
+                $('#id').val(bean.id);
+                $('#modal-modify').modal;
             }
         });
     }
@@ -425,7 +443,7 @@
         var data = $("form:first").serialize()
         $.ajax({
             type: 'post',
-            url: '/merchant-brand/add',
+            url: '/merchant-brand-domain/add',
             data: data,
             dataType: 'text',
             success: function (data) {
@@ -439,30 +457,61 @@
             }
         });
     }
-    /*修改商户提交*/
+    /*修改提交*/
     function sub1() {
         var data = $("form:last").serialize();
-        alert(data)
         $.ajax({
             type: 'post',
-            url: '/merchant/update',
+            url: '/merchant-brand-domain/update',
             data: data,
             dataType: 'text',
             success: function (data) {
                 if (data == "true") {
                     alert("修改成功");
+                    $('#modal-merchant-modify').modal("hide");
+                    window.location.reload();
                 }else{
                     alert("修改失败")
                 }
-                $('#modal-merchant-modify').modal("hide");
-                window.location.reload();
+            }
+        });
+    }
+    function brandList(obj,index) {
+        $.ajax({
+            type: 'post',
+            url: '/merchant-brand/getlist',
+            data: '',
+            dataType: 'json',
+            success: function (list) {
+                var innerhtml = '<option value="0" selected>请选择</option>'
+                $.each(list,function (idx, val) {
+                    if (idx == index)
+                        innerhtml += '<option value="'+val.id+'" selected>'+val.code+'</option>';
+                    else
+                        innerhtml += '<option value="'+val.id+'">'+val.code+'</option>';
+                })
+                $(obj).html(innerhtml);
+            }
+        })
+    }
+    function dele(id) {
+        $.ajax({
+            type: 'post',
+            url: '/merchant-brand-domain/delete',
+            data: 'id='+id,
+            dataType: 'text',
+            success: function (data) {
+                if (data == "true") {
+                    alert("删除成功");
+                    $('#modal-merchant-modify').modal("hide");
+                    window.location.reload();
+                }else{
+                    alert("删除失败")
+                }
             }
         });
     }
 
-    function dele() {
-
-    }
 </script>
 </body>
 </html>

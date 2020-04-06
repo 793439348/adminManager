@@ -12,6 +12,7 @@ import admin.domains.content.dao.MerchantBrandDomainDao;
 import admin.domains.content.entity.MerchantBrandDomain;
 import admin.domains.content.biz.MerchantBrandDomainService;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,22 +54,35 @@ public class MerchantBrandDomainServiceImpl implements MerchantBrandDomainServic
     }
 
     @Override
-    public PageList search(String name, Integer status, String domain, Integer page, Integer pageSize) {
+    public PageList search(Integer brand, String domain, Integer page, Integer pageSize) {
         final List<Criterion> criterions = new ArrayList<Criterion>();
         final List<Order> orders = new ArrayList<Order>();
 
-        if (StringUtil.isNotNull(name))
-            criterions.add((Criterion) Restrictions.like("name", name));
+        if (brand != null && brand != 0 )
+            criterions.add((Criterion) Restrictions.eq("brandId", brand));
 
         if (StringUtil.isNotNull(domain))
-            criterions.add((Criterion) Restrictions.like("domain", domain));
+            criterions.add((Criterion) Restrictions.like("domain", domain, MatchMode.ANYWHERE));
 
-        if (status != null && status > -1 && status < 2)
-            criterions.add((Criterion) Restrictions.eq("status", status));
+        /*if (status != null && status > -1 && status < 2)
+            criterions.add((Criterion) Restrictions.eq("status", status));*/
 
         orders.add(Order.desc("id"));
 
-        return domainDao.find(criterions,orders,page,pageSize);
+        PageList pageList = domainDao.find(criterions, orders, page, pageSize);
+        List<MerchantDomainVO> list = new ArrayList<>();
+        for (Object o : pageList.getList()) {
+            MerchantDomainVO domainVO = new MerchantDomainVO();
+            domainVO.setDomain(((MerchantBrandDomain)o).getDomain());
+            domainVO.setId(((MerchantBrandDomain)o).getId());
+            MerchantBrand brandBean = merchantBrandDao.getBean(((MerchantBrandDomain) o).getBrandId());
+            domainVO.setBrandName(brandBean.getName());
+            Merchant bean = merchantDao.getBean(brandBean.getMerchantId());
+            domainVO.setMerchantCode(bean.getCode());
+            list.add(domainVO);
+        }
+        pageList.setList(list);
+        return pageList;
     }
 
     @Override
@@ -96,7 +110,9 @@ public class MerchantBrandDomainServiceImpl implements MerchantBrandDomainServic
     }
 
     @Override
-    public boolean delete(MerchantBrandDomain domain) {
+    public boolean delete(Integer id) {
+        MerchantBrandDomain domain = new MerchantBrandDomain();
+        domain.setId(id);
         return domainDao.delete(domain);
     }
 }

@@ -25,7 +25,7 @@ public interface SiteTemplateDao {
 
     boolean add(SiteTemplate siteTemplate);
 
-    boolean delete(SiteTemplate siteTemplate);
+    boolean delete(Integer id);
 
     boolean update(SiteTemplate siteTemplate);
 

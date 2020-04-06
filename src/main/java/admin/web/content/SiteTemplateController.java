@@ -8,6 +8,7 @@ import admin.web.helper.AbstractActionController;
 import com.alibaba.fastjson.JSON;
 import javautils.http.HttpUtil;
 import admin.domains.content.biz.SiteTemplateService;
+import javautils.jdbc.PageList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,14 +36,15 @@ public class SiteTemplateController extends AbstractActionController {
     @Autowired
     private SiteTemplateService siteTemplateService;
 
-    @RequestMapping(value = "/site-template/list",method = RequestMethod.POST)
+    @ResponseBody
+    @RequestMapping(value = "/site-template/list", method = RequestMethod.POST)
     public void SITE_TEMPLATE_LIST(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/site-template/list";
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
         List<SiteTemplate> all = siteTemplateService.findAll();
-        HttpUtil.write(response, JSON.toJSONString(all),"text/json");
+        HttpUtil.write(response, JSON.toJSONString(all), "text/json");
 
         /*if (uEntity != null) {
             if (super.hasAccess(uEntity, actionKey)){
@@ -54,7 +56,8 @@ public class SiteTemplateController extends AbstractActionController {
         HttpUtil.write(response,json.toString(),"text/json");*/
     }
 
-    @RequestMapping(value = "/site-template/add",method = RequestMethod.POST)
+    @ResponseBody
+    @RequestMapping(value = "/site-template/add", method = RequestMethod.POST)
     public void SITE_TEMPLATE_ADD(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/site-template/add";
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
@@ -70,7 +73,7 @@ public class SiteTemplateController extends AbstractActionController {
 
         log.info("SITE_TEMPLATE_ADD :{}", siteTemplate);
         boolean add = siteTemplateService.add(siteTemplate);
-        HttpUtil.write(response,JSON.toJSONString(add),"text");
+        HttpUtil.write(response, JSON.toJSONString(add), "text");
         /*if (uEntity != null) {
             if (super.hasAccess(uEntity, actionKey)){
 
@@ -81,31 +84,37 @@ public class SiteTemplateController extends AbstractActionController {
         HttpUtil.write(response,json.toString(),"text/json");*/
     }
 
-    @RequestMapping(value = "/site-template/delete",method = RequestMethod.POST)
+    @ResponseBody
+    @RequestMapping(value = "/site-template/delete", method = RequestMethod.POST)
     public void SITE_TEMPLATE_DELETE(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/site-template/delete";
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
-        if (uEntity != null) {
-            if (super.hasAccess(uEntity, actionKey)){
+        Integer id = HttpUtil.getIntParameter(request, "id");
+        boolean delete = siteTemplateService.delete(id);
+        HttpUtil.write(response,String.valueOf(delete),"text");
 
-            }else
-                json.set(2,"");
-        }else
-            json.set(2,"");
-        HttpUtil.write(response,json.toString(),"text/json");
+        /*if (uEntity != null) {
+            if (super.hasAccess(uEntity, actionKey)) {
+
+            } else
+                json.set(2, "");
+        } else
+            json.set(2, "");
+        HttpUtil.write(response, json.toString(), "text/json");*/
     }
 
-    @RequestMapping(value = "/site-template/update",method = RequestMethod.POST)
-    public void SITE_TEMPLATE_UPDATE(SiteTemplate siteTemplate,HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    @ResponseBody
+    @RequestMapping(value = "/site-template/update", method = RequestMethod.POST)
+    public void SITE_TEMPLATE_UPDATE(SiteTemplate siteTemplate, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/site-template/update";
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
         final AdminUser uEntity = super.getCurrUser(session, request, response);
 
-        log.info("SITE_TEMPLATE_UPDATE :{}",siteTemplate);
+        log.info("SITE_TEMPLATE_UPDATE :{}", siteTemplate);
         boolean add = siteTemplateService.update(siteTemplate);
-        HttpUtil.write(response,JSON.toJSONString(add),"text");
+        HttpUtil.write(response, JSON.toJSONString(add), "text");
        /* if (uEntity != null) {
             if (super.hasAccess(uEntity, actionKey)){
 
@@ -121,13 +130,36 @@ public class SiteTemplateController extends AbstractActionController {
     public void getMerchant(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         Integer id = HttpUtil.getIntParameter(request, "id");
         SiteTemplate siteTemplate = siteTemplateService.getBean(id);
-        HttpUtil.write(response, JSON.toJSONString(siteTemplate),"text/json");
+        HttpUtil.write(response, JSON.toJSONString(siteTemplate), "text/json");
     }
+
     @ResponseBody
     @RequestMapping(value = "/site-template/getbycode", method = RequestMethod.POST)
     public void getMerchantByCode(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         String code = request.getParameter("code");
         SiteTemplate siteTemplate = siteTemplateService.getBeanByCode(code);
-        HttpUtil.write(response, JSON.toJSONString(siteTemplate),"text/json");
+        HttpUtil.write(response, JSON.toJSONString(siteTemplate), "text/json");
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/site-template/search", method = RequestMethod.POST)
+    public void search(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        String name = request.getParameter("name");
+        Integer type = HttpUtil.getIntParameter(request, "type");
+        Integer page = HttpUtil.getIntParameter(request, "page");
+        Integer pageSize = HttpUtil.getIntParameter(request, "pageSize");
+        PageList pList = siteTemplateService.search(type, name, page, pageSize);
+        final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
+        if (pList != null) {
+            json.accumulate("totalCount", pList.getCount());
+            json.accumulate("data", pList.getList());
+        } else {
+            json.accumulate("totalCount", 0);
+            json.accumulate("data", "[]");
+        }
+        json.set(0,"0-3");
+        HttpUtil.write(response,json.toString(),"text/json");
+
+    }
+
 }

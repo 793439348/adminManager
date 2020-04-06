@@ -37,7 +37,9 @@ public class MerchantBrandDomainDaoImpl implements MerchantBrandDomainDao {
     }
 
     public boolean delete(MerchantBrandDomain merchantBrandDomain) {
-        return superDao.delete(merchantBrandDomain);
+        String hql = "delete from MerchantBrandDomain where id = ?0";
+        Object[] obj = {merchantBrandDomain.getId()};
+        return superDao.delete(hql,obj);
     }
 
     public boolean update(MerchantBrandDomain merchantBrandDomain) {

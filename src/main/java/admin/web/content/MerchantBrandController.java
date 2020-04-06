@@ -36,7 +36,7 @@ public class MerchantBrandController extends AbstractActionController {
 
     @Autowired
     private MerchantBrandService merchantBrandService;
-
+    @ResponseBody
     @RequestMapping(value = "/merchant-brand/list",method = RequestMethod.POST)
     public void MERCHANT_BRAND_LIST(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/merchant-brand/list";
@@ -56,7 +56,7 @@ public class MerchantBrandController extends AbstractActionController {
             json.set(2,"2-6");
         HttpUtil.write(response,json.toString(),"text/json");*/
     }
-
+    @ResponseBody
     @RequestMapping(value = "/merchant-brand/add",method = RequestMethod.POST)
     public void MERCHANT_BRAND_ADD(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/merchant-brand/add";
@@ -84,7 +84,7 @@ public class MerchantBrandController extends AbstractActionController {
             json.set(2, "2-6");
         HttpUtil.write(response, json.toString(), "text/json");
     }
-
+    @ResponseBody
     @RequestMapping(value = "/merchant-brand/delete",method = RequestMethod.POST)
     public void MERCHANT_BRAND_DELETE(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/merchant-brand/delete";
@@ -100,7 +100,7 @@ public class MerchantBrandController extends AbstractActionController {
             json.set(2,"");
         HttpUtil.write(response,json.toString(),"text/json");
     }
-
+    @ResponseBody
     @RequestMapping(value = "/merchant-brand/update",method = RequestMethod.POST)
     public void MERCHANT_BRAND_UPDATE(MerchantBrand merchantBrand,HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final String actionKey = "/merchant-brand/update";
@@ -119,7 +119,7 @@ public class MerchantBrandController extends AbstractActionController {
             json.set(2,"2-6");
         HttpUtil.write(response,json.toString(),"text/json");
     }
-
+    @ResponseBody
     @RequestMapping(value = "/merchant-brand/get",method = RequestMethod.POST)
     public void MERCHANT_BRAND_GET(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
         final WebJSONObject json = new WebJSONObject(super.getAdminDataFactory());
@@ -129,7 +129,7 @@ public class MerchantBrandController extends AbstractActionController {
         MerchantBrandVO bean = merchantBrandService.getBean(id);
         HttpUtil.write(response, JSON.toJSONString(bean),"text/json");
     }
-
+    @ResponseBody
     @RequestMapping(value = "/merchant-brand/getlist",method = RequestMethod.POST)
     public void getList(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 

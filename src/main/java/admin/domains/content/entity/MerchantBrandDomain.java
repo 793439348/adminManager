@@ -20,6 +20,14 @@ public class MerchantBrandDomain {
     private int brandId;
     private String domain;
 
+    public MerchantBrandDomain() {
+    }
+
+    public MerchantBrandDomain(int brandId, String domain) {
+        this.brandId = brandId;
+        this.domain = domain;
+    }
+
     @Id
     @Column(name = "id")
     public int getId() {

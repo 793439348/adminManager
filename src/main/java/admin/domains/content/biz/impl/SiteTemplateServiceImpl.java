@@ -7,6 +7,7 @@ import admin.domains.content.dao.SiteTemplateDao;
 import admin.domains.content.entity.SiteTemplate;
 import admin.domains.content.biz.SiteTemplateService;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,14 +54,18 @@ public class SiteTemplateServiceImpl implements SiteTemplateService {
         List<Criterion> criteria = new ArrayList<>();
         List<Order> orders = new ArrayList<>();
 
-        if (type!=null && type>-1 && type<2)
+        if (type!=null && type>0 && type<=2)
             criteria.add((Criterion) Restrictions.eq("type", type));
 
         if (StringUtil.isNotNull(name))
-            criteria.add((Criterion) Restrictions.like("name",name));
-
-
-        return siteTemplateDao.find(criteria,orders,page,pageSize);
+            criteria.add((Criterion) Restrictions.like("name",name, MatchMode.ANYWHERE));
+        List<SiteTemplate> list = new ArrayList<>();
+        PageList pageList = siteTemplateDao.find(criteria, orders, page, pageSize);
+        for (Object o : pageList.getList()) {
+            list.add((SiteTemplate) o);
+        }
+        pageList.setList(list);
+        return pageList;
     }
 
     @Override
@@ -71,5 +76,10 @@ public class SiteTemplateServiceImpl implements SiteTemplateService {
     @Override
     public boolean update(SiteTemplate siteTemplate) {
         return siteTemplateDao.update(siteTemplate);
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return siteTemplateDao.delete(id);
     }
 }

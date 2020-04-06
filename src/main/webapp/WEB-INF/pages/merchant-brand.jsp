@@ -289,6 +289,13 @@
                         tableList.find('table > tbody').html('<tr><td colspan="' + tds + '">没有相关数据</td></tr>');
                         $('#page').text(0);
                     }
+
+                    $("input[name=m-type]").click(function(){
+                        var type = this.value;
+                        var id = $(this).parent().parent().siblings(":first").text();
+                        modifyType(id, type);
+                    });
+
                 }
             });
         }
@@ -413,11 +420,7 @@
             sub1();
         });
 
-        $("input[name=m-type]").click(function(){
-            var type = this.value;
-            var id = $(this).parent().parent().siblings(":first").text();
-            modifyType(id, type);
-        });
+
 
     });
     /*修改*/

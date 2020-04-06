@@ -26,4 +26,6 @@ public interface SiteTemplateService {
     boolean add(SiteTemplate siteTemplate);
 
     boolean update(SiteTemplate siteTemplate);
+
+    boolean delete(Integer id);
 }
