@@ -1046,11 +1046,7 @@ public class AdminPageController extends AbstractActionController
         }
         return new ModelAndView("/site-template");
     }
-    @RequestMapping(value = { "/test" }, method = { RequestMethod.GET })
-    @ResponseBody
-    public ModelAndView test(final HttpSession session, final HttpServletRequest request, final HttpServletResponse response) {
-        return new ModelAndView("/test");
-    }
+
 
 
 

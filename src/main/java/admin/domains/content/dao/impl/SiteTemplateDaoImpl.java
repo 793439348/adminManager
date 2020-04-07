@@ -1,5 +1,6 @@
 package admin.domains.content.dao.impl;
 
+import javautils.StringUtil;
 import javautils.jdbc.PageList;
 import javautils.jdbc.hibernate.HibernateSuperDao;
 import admin.domains.content.dao.SiteTemplateDao;
@@ -56,10 +57,28 @@ public class SiteTemplateDaoImpl implements SiteTemplateDao {
     }
 
     public boolean update(SiteTemplate siteTemplate) {
-        String hql = "update SiteTemplate set name = ?0,type = ?1,smallImage=?2,bigImage=?3 where id = ?4";
-        Object[] objs = {siteTemplate.getName(), siteTemplate.getType(), siteTemplate.getSmallImage(),
-                siteTemplate.getBigImage(),siteTemplate.getId()};
-        return superDao.update(hql, objs);
+        StringBuffer hql = new StringBuffer("update SiteTemplate set name = ?0,type = ?1,code = ?2");
+
+        if ( StringUtil.isNotNull(siteTemplate.getBigImage()) && StringUtil.isNotNull(siteTemplate.getSmallImage())){
+            hql.append(", smallImage = ?3 , bigImage = ?4 where id = ?5");
+            Object[] objs = {siteTemplate.getName(), siteTemplate.getType(), siteTemplate.getCode(), siteTemplate.getSmallImage(),
+                    siteTemplate.getBigImage(), siteTemplate.getId()};
+            return superDao.update(hql.toString(), objs);
+        } else if (StringUtil.isNotNull(siteTemplate.getSmallImage())){
+            hql.append(" ,  smallImage = ?3 where id = ?4");
+            Object[] objs = {siteTemplate.getName(), siteTemplate.getType(), siteTemplate.getCode(), siteTemplate.getSmallImage(),
+                     siteTemplate.getId()};
+            return superDao.update(hql.toString(), objs);
+        }else if (StringUtil.isNotNull(siteTemplate.getBigImage())){
+            hql.append(" ,bigImage = ?3 where id = ?4");
+            Object[] objs = {siteTemplate.getName(), siteTemplate.getType(), siteTemplate.getCode(), siteTemplate.getBigImage(),
+                    siteTemplate.getId()};
+            return superDao.update(hql.toString(), objs);
+        } else {
+            hql.append(" where id = ?3");
+            Object[] objs ={siteTemplate.getName(), siteTemplate.getType(), siteTemplate.getCode(), siteTemplate.getId()};
+            return superDao.update(hql.toString(), objs);
+        }
     }
 
     public PageList find(List<Criterion> condition, List<Order> sort, int page, int pageSize) {
