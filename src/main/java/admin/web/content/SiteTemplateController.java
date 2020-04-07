@@ -222,6 +222,7 @@ public class SiteTemplateController extends AbstractActionController {
                         while ((n = is.read(bytes)) != -1) {
                             os.write(bytes);
                         }
+                        smallImage = "templateImg/"+smallImage;
                     }else {
                         json.set(1,"");
                         err.append("\n 缩略图格式错误");
@@ -239,6 +240,7 @@ public class SiteTemplateController extends AbstractActionController {
                         while ((n = is.read(bytes)) != -1) {
                             os.write(bytes);
                         }
+                        bigImage = "templateImg/"+bigImage;
                     }else {
                         json.set(1,"");
                         err.append("\n 预览图格式错误");
