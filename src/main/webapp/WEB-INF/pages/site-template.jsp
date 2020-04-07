@@ -95,7 +95,7 @@
                                                 <span class="input-group-addon no-bg fixed">类型</span>
                                                 <select data-command="type" name="type" class="form-control">
                                                     <option value="">全部</option>
-                                                    <option value="1">手机端</option>
+                                                    <option value="1">移动端</option>
                                                     <option value="2">PC端</option>
 
                                                 </select>

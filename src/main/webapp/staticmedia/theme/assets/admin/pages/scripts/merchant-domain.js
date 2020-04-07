@@ -33,8 +33,8 @@ $(document).ready(function () {
 
                     innerHtml +=
                         '<tr class="align-center" data-id="' + val.id + '">' +
+                        '<td>' + val.brandCode + '</td>' +
                         '<td>' + val.merchantCode + '</td>' +
-                        '<td>' + val.brandName + '</td>' +
                         // '<td>' + val.name + '</td>' +
                         // '<td>' + val.type + '</td>' +
                         '<td>' + val.domain + '</td>' +

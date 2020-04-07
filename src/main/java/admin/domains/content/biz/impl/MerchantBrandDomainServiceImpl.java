@@ -76,7 +76,7 @@ public class MerchantBrandDomainServiceImpl implements MerchantBrandDomainServic
             domainVO.setDomain(((MerchantBrandDomain)o).getDomain());
             domainVO.setId(((MerchantBrandDomain)o).getId());
             MerchantBrand brandBean = merchantBrandDao.getBean(((MerchantBrandDomain) o).getBrandId());
-            domainVO.setBrandName(brandBean.getName());
+            domainVO.setBrandCode(brandBean.getCode());
             Merchant bean = merchantDao.getBean(brandBean.getMerchantId());
             domainVO.setMerchantCode(bean.getCode());
             list.add(domainVO);

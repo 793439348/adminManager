@@ -235,10 +235,10 @@ public class SiteTemplateController extends AbstractActionController {
                         File file1 = new File(savePath + "/" + bigImage);
                         if (!file1.exists())
                             file1.createNewFile();
-                        is = templateImg.getInputStream();
-                        os = new FileOutputStream(file1);
-                        while ((n = is.read(bytes)) != -1) {
-                            os.write(bytes);
+                        is1 = templateImg1.getInputStream();
+                        os1 = new FileOutputStream(file1);
+                        while ((n = is1.read(bytes)) != -1) {
+                            os1.write(bytes);
                         }
                         bigImage = "templateImg/"+bigImage;
                     }else {

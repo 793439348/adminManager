@@ -18,7 +18,7 @@ public class MerchantDomainVO {
     private Integer id ;
     private String merchantCode;
     private Integer brandId;
-    private String brandName;
+    private String brandCode;
     private String name;
     private Integer type;
     private String domain;
@@ -32,7 +32,7 @@ public class MerchantDomainVO {
         this.id = domain.getId();
         this.merchantCode = merchant.getCode();
         this.brandId = brand.getId();
-        this.brandName = brand.getName();
+        this.brandCode = brand.getCode();
         this.domain = domain.getDomain();
         this.type = 0;
         this.name = "";
